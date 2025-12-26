@@ -6,29 +6,29 @@ import CardActionArea from '@mui/material/CardActionArea';
 import Button from '@mui/material/Button';
 
 import { Link } from "react-router-dom";
+import "../../css/insurance.css"
 
-import "../../css/investement.css"
 
 function LifeInSueance() {
     return ( 
-        <div className='container '>
-        <Card sx={{ maxWidth: 345 }} className='card'>
+        <div className='container mx-auto'>
+        <Card sx={{ maxWidth: 345 }} className='insurancecard'>
       <CardActionArea>
         
         <CardContent>
-            <h1 className='sambol'> <i class="fa-solid fa-dollar-sign"></i></h1>
+            <h1 className='insurancesambol'> <i class="fa-solid fa-shield"></i></h1>
            
           <Typography gutterBottom variant="h5" component="div">
-            Loans
+            Insurance
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-           Personal, Bussiness ,Home Loans with Minimum Documentations and Low-Interest Rates
+           Live your best life today, your tomorrow is secured with us
           </Typography>
         </CardContent>
         <CardActions >
         <Button size="small" color="primary" component={Link}
-  to="/investment">
-          Apply Now &nbsp;<i class="fa-solid fa-arrow-right-long"></i>
+  to="/lones">
+          Get Started &nbsp;<i class="fa-solid fa-arrow-right-long"></i>
         </Button>
       </CardActions>
       </CardActionArea>

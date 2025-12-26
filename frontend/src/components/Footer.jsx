@@ -3,7 +3,8 @@ import '../css/footer.css';
 import { Link } from 'react-router-dom';
 function Footer() {
     return ( 
-        <div className='footer p-5'>
+        <div className='footer p-5 mt-5'>
+            
             <div className='row '>
                 <div className='col'>
                     <h3>Finexa</h3>

@@ -10,10 +10,11 @@ function ProductPage() {
             <Investment/>
         </div>
         <div className='col-4'>
-            <Lone/>
+            
+            <LifeInSueance/>
         </div>
         <div className='col-4'>
-            <LifeInSueance/>
+            <Lone/>
         </div>
 
         </div>         

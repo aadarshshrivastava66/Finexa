@@ -1,0 +1,40 @@
+.loan-card {
+  background: #f5f6f8;
+  border-radius: 14px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  width: 380px;         
+}
+
+
+.loan-card:hover {
+  background: #ffffff;
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.loan-title {
+  font-weight: 700;
+}
+
+.loan-desc {
+  color: #555;
+  font-size: 15px;
+}
+
+.loan-info {
+  list-style: none;
+  padding: 0;
+  font-size: 14px;
+}
+
+
+
+.loan-actions {
+  margin-top: 12px;
+}
+
+.loan-img {
+  width: 100px;
+  height: auto;
+}

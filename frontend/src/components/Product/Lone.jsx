@@ -8,33 +8,34 @@ import Button from '@mui/material/Button';
 
 import { Link } from "react-router-dom";
 
-import "../../css/lone.css"
+import "../../css/investement.css"
 
 function Lone() {
     return ( 
-        <div className='container mx-auto'>
-        <Card sx={{ maxWidth: 345 }} className='lonecard'>
+      <div className='container '>
+        <Card sx={{ maxWidth: 345 }} className='card'>
       <CardActionArea>
         
         <CardContent>
-            <h1 className='lonesambol'> <i class="fa-solid fa-shield"></i></h1>
+            <h1 className='sambol'> <i class="fa-solid fa-dollar-sign"></i></h1>
            
           <Typography gutterBottom variant="h5" component="div">
-            Insurance
+            Loans
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-           Live your best life today, your tomorrow is secured with us
+           Personal, Bussiness ,Home Loans with Minimum Documentations and Low-Interest Rates
           </Typography>
         </CardContent>
         <CardActions >
         <Button size="small" color="primary" component={Link}
-  to="/investment">
-          Get Started &nbsp;<i class="fa-solid fa-arrow-right-long"></i>
+  to="/lones">
+          Apply Now &nbsp;<i class="fa-solid fa-arrow-right-long"></i>
         </Button>
       </CardActions>
       </CardActionArea>
     </Card>
     </div>
+        
      );
 }
 
