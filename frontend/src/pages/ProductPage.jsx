@@ -5,7 +5,9 @@ import Lone from '../components/Product/Lone';
 function ProductPage() {
     return ( 
         <>
+        <h1 className='text-center mt-5'>Our Core Offerings</h1>
         <div className='row p-5'>
+            
         <div className='col-4'>
             <Investment/>
         </div>

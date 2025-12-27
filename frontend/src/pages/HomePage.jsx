@@ -10,7 +10,6 @@ function HomePage() {
         <>
         
         <Hero/>
-        <h1 className='text-center mt-5'>Our Core Offerings</h1>
         <ProductPage/>
         <Imporant/>
         </>

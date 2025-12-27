@@ -8,24 +8,24 @@ import Navbar from './components/Navbar';
 import ProductPage from './pages/ProductPage';
 import Footer from './components/Footer';
 import LonePage from './pages/LonePage';
-
+import CheckEligibility from './components/Lone/CheckEligibility'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+ 
     <BrowserRouter>
       <Navbar />
      
       <Routes>
         <Route path='/' element={<HomePage />}></Route>
-      <Route path="/products" element={<ProductPage/>}/>
+      <Route path="/product" element={<ProductPage/>}/>
       <Route path="/lones" element={<LonePage/>}/>
-
+      <Route path="/check-eligibility/:id" element={<CheckEligibility />} />
 
       </Routes>
       
       <Footer/>
     </BrowserRouter>
-  </React.StrictMode>
+  
 );
 
