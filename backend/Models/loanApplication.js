@@ -1,0 +1,42 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const LoanApplicationSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+
+    loan: {
+      type: Schema.Types.ObjectId,
+      ref: "Loan", // ✅ refers to your existing Loan model
+      required: true,
+    },
+
+    appliedAmount: {
+      type: Number,
+      required: true,
+    },
+
+    employmentType: {
+      type: String,
+      required: true,
+    },
+
+    annualIncome: {
+      type: Number,
+      required: true,
+    },
+
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model("LoanApplication", LoanApplicationSchema);

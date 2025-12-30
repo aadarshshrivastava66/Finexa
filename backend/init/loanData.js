@@ -220,4 +220,4 @@ const loanData = [
   }
 ];
 
-module.exports = loanData;
+module.exports = {initData:loanData}

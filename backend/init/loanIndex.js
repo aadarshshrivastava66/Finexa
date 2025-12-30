@@ -1,5 +1,5 @@
 const mongoose=require('mongoose');
-const loanModal=require('../Models/loan');
+const loan=require('../Models/loan');
 const LoanData=require('./loanData');
 
 const mongoUrl="mongodb://127.0.0.1:27017/finexaDB";
@@ -18,8 +18,8 @@ main().then(()=>{
 })
 
 const initDb=async()=>{
-    await loanModal.deleteMany({});
-    await loanModal.insertMany(LoanData);
+    await loan.deleteMany({});
+    await loan.insertMany(LoanData);
     console.log("Loan Data Initialized");
 }
 
