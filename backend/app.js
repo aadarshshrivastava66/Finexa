@@ -25,7 +25,8 @@ app.use("/user", userRoute);
 const loanRoute = require("./routes/loan");
 app.use("/loans", loanRoute);
 
-
+const adminRoute=require('./routes/admin');
+app.use('/admin',adminRoute)
 
 app.listen(8080, () => {
   console.log("Server running on port 8080");

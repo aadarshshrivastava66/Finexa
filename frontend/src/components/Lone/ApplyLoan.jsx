@@ -5,38 +5,42 @@ import axios from "axios";
 function ApplyLoan() {
   const { loanId } = useParams();
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
   const [formData, setFormData] = useState({
-    loanId: "",
+    loanId: loanId,
     appliedAmount: "",
     employmentType: "",
     annualIncome: "",
   });
 
-  useEffect(() => {
-    if (!loanId) {
-      setLoading(false);
-      return;
-    }
-
-    axios
-      .get(`http://localhost:8080/loans/${loanId}/checkEligibility`)
-      .then(() => {
-        setFormData((prev) => ({ ...prev, loanId }));
-        setLoading(false);
-      })
-      .catch(() => {
-        setError("Failed to load loan details");
-        setLoading(false);
-      });
-  }, [loanId]);
+  const [emiData, setEmiData] = useState(null);
+  const [loadingEmi, setLoadingEmi] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // 🔹 EMI CALCULATION
+  const calculateEmi = async () => {
+    if (!formData.appliedAmount) {
+      alert("Enter loan amount first");
+      return;
+    }
+
+    try {
+      setLoadingEmi(true);
+      const res = await axios.post(
+        `http://localhost:8080/loans/${loanId}/calculate-emi`,
+        { amount: formData.appliedAmount }
+      );
+      setEmiData(res.data);
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to calculate EMI");
+    } finally {
+      setLoadingEmi(false);
+    }
+  };
+
+  // 🔹 APPLY LOAN
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -46,15 +50,11 @@ function ApplyLoan() {
         formData,
         { withCredentials: true }
       );
-
       alert(res.data.message);
     } catch (err) {
       alert(err.response?.data?.message || "Failed to apply loan");
     }
   };
-
-  if (loading) return <p className="text-center mt-4">Loading...</p>;
-  if (error) return <p className="text-danger text-center">{error}</p>;
 
   return (
     <div className="container mt-5">
@@ -73,6 +73,24 @@ function ApplyLoan() {
             />
           </div>
 
+          <button
+            type="button"
+            className="btn btn-outline-secondary mb-3"
+            onClick={calculateEmi}
+          >
+            {loadingEmi ? "Calculating..." : "Calculate EMI"}
+          </button>
+
+          {/* EMI RESULT */}
+          {emiData && (
+            <div className="alert alert-info" >
+              <p style={{color:"black"}}><strong>Loan:</strong> {emiData.loanName}</p>
+              <p style={{color:"black"}}><strong>Interest:</strong> {emiData.interestRate}%</p>
+              <p style={{color:"black"}}><strong>Tenure:</strong> {emiData.tenure} years</p>
+              <h5 style={{color:"black"}}>Monthly EMI: ₹{emiData.emi}</h5>
+            </div>
+          )}
+
           <div className="mb-3">
             <label className="form-label">Employment Type</label>
             <select
@@ -81,12 +99,9 @@ function ApplyLoan() {
               onChange={handleChange}
               required
             >
-              <option value="">Select employment type</option>
+              <option value="">Select</option>
               <option value="salaried">Salaried</option>
               <option value="self-employed">Self Employed</option>
-              <option value="business">Business</option>
-              <option value="student">Student</option>
-              <option value="farmer">Farmer</option>
             </select>
           </div>
 
@@ -100,7 +115,14 @@ function ApplyLoan() {
               required
             />
           </div>
-
+            <div className="col-12">
+            <div className="form-check">
+              <input className="form-check-input" type="checkbox" required />
+              <label className="form-check-label">
+                I agree with the Terms & Conditions
+              </label>
+            </div>
+          </div>
           <div className="text-center">
             <button className="btn btn-primary px-5">
               Submit Application

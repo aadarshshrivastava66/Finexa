@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../Models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-
+const isLoggedIn = require("../middleware/isLoggedIn");
 // Register
 router.post("/singup", async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
@@ -77,16 +77,13 @@ router.post("/logout", (req, res) => {
 });
 
 // Get current user
-router.get("/me", (req, res) => {
-  const token = req.cookies.token;
-  if (!token) return res.status(401).json({ message: "Not authenticated" });
-
-  try {
-    const decoded = jwt.verify(token, "your_secret_key");
-    res.json({ user: { userId: decoded.userId, role: decoded.role } });
-  } catch (err) {
-    res.status(401).json({ message: "Invalid token" });
-  }
+router.get("/me", isLoggedIn, (req, res) => {
+  res.status(200).json({
+    user: {
+      userId: req.user.userId,
+      role: req.user.role,
+    },
+  });
 });
 
 

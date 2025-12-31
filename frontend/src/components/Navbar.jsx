@@ -79,6 +79,11 @@ function Navbar() {
                     Register
                   </Link>
                 </li>
+                <li className="nav-item mx-3">
+                  <Link to="admin/signup" className="nav-link active">
+                    Admin Register
+                  </Link>
+                </li>
               </>
             )}
           </ul>

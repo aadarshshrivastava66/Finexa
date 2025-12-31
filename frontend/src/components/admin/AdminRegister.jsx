@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import "../../css/register.css";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "../../css/register.css";
 import axios from "axios";
 
-function Register() {
+function AdminRegister() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -12,13 +12,12 @@ function Register() {
     phone: "",
     password: "",
   });
-
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // clear error on input change
+    setError("");
   };
 
   const handleSubmit = async (e) => {
@@ -27,12 +26,11 @@ function Register() {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/user/singup", formData, {
+      await axios.post("http://localhost:8080/admin/signup", formData, {
         withCredentials: true,
       });
-      alert("Welcome to Finexa, Please Login");
-
-      navigate("/login"); // redirect to login page
+      alert("Registration successful! Please login.");
+      navigate("/admin/login"); // redirect to login page
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Registration failed!");
@@ -40,13 +38,12 @@ function Register() {
       setLoading(false);
     }
   };
-
   return (
     <div className="container mt-5">
       {error && <div className="alert alert-danger text-center">{error}</div>}
-      
+
       <div className="card shadow-lg p-4 register-card">
-        <h3 className="text-center mb-4">Join Finexa</h3>
+        <h3 className="text-center mb-4">Register</h3>
 
         <form className="row g-3" onSubmit={handleSubmit}>
           {/* First Name */}
@@ -114,6 +111,19 @@ function Register() {
               onChange={handleChange}
             />
           </div>
+          <div className="mb-3">
+            <label className="form-label">Role</label>
+            <select
+              name="role"
+              className="form-select"
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select</option>
+              <option value="admin">Admin</option>
+              <option value="superadmin">Super Admin</option>
+            </select>
+          </div>
 
           {/* Register Button */}
           <div className="col-12 text-center">
@@ -125,21 +135,9 @@ function Register() {
               {loading ? "Registering..." : "Register"}
             </button>
           </div>
-
-          {/* Login Link */}
-          <div className="text-center mt-2">
-            <Link
-              to="/login"
-              className="nav-link"
-              style={{ textDecoration: "none" }}
-            >
-              Already a user? → Login
-            </Link>
-          </div>
         </form>
       </div>
     </div>
   );
 }
-
-export default Register;
+export default AdminRegister;
