@@ -49,6 +49,11 @@ function Navbar() {
                 About
               </Link>
             </li>
+            <li className="nav-item mx-3">
+              <Link className="nav-link active" to="/admin/dashboard">
+                Admin Dashboard
+              </Link>
+            </li>
 
             {user ? (
               <>

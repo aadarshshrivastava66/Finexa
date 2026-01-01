@@ -3,6 +3,12 @@ const router=express.Router();
 const bcrypt=require("bcrypt");
 const Admin=require ('../Models/Admin');
 const jwt = require("jsonwebtoken");
+const isLoggedIn = require("../middleware/isLoggedIn");
+const mongoose=require('mongoose')
+const isAdmin=require('../middleware/isAdmin');
+const LoanApplication=require('../Models/loanApplication');
+
+
 router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, phone, password ,role} = req.body;
 
@@ -79,5 +85,88 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+//All Applications
+router.get("/applications",isLoggedIn, isAdmin, async (req, res) => {
+  try {
+    const applications = await LoanApplication.find()
+      .populate("user", "name email phone")
+      .populate("loan", "name interestRate tenure")
+      .sort({ createdAt: -1 });
+
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+//single Application
+router.get("/applications/:id", isLoggedIn, isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id)
+
+    if (!id) {
+      return res.status(400).json({ message: "Application ID required" });
+    }
+
+    const application = await LoanApplication.findById(id)
+      .populate("user", "name email phone")
+      .populate("loan");
+
+      console.log(application)
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+
+    res.json(application);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ============================
+// APPROVE / REJECT APPLICATION
+// ============================
+router.patch(
+  "/applications/:id/status",
+  isLoggedIn,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status, adminRemark } = req.body;
+
+      const allowedStatus = ["PENDING", "APPROVED", "REJECTED"];
+      if (!allowedStatus.includes(status)) {
+        return res.status(400).json({ message: "Invalid status" });
+      }
+
+      const application = await LoanApplication.findById(id);
+      if (!application) {
+        return res.status(404).json({ message: "Application not found" });
+      }
+
+      application.status = status;
+      application.adminRemark = adminRemark;
+      application.reviewedBy = req.user._id;
+      application.reviewedAt = new Date();
+
+      await application.save();
+
+      res.json({
+        message: `Application ${status} successfully`,
+        application,
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+);
+
 
 module.exports=router;

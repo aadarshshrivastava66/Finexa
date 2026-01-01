@@ -17,6 +17,8 @@ import ApplyLoan from "./components/Lone/ApplyLoan";
 import UserDashboard from "./pages/UserDashboard";
 import AdminRegister from './components/admin/AdminRegister'
 import AdminLogin from './components/admin/AdminLogin'
+import AdminRoute from './route/AdminRoute'
+import AdminDashboard from './pages/AdminDashboard'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -51,8 +53,21 @@ root.render(
         {/* Admin */}
            <Route path="admin/signup" element={<AdminRegister />} />
         <Route path="admin/login" element={<AdminLogin />} />
+
+                    <Route
+  path="/admin/dashboard"
+  element={
+    <AdminRoute>
+      <AdminDashboard />
+    </AdminRoute>
+  }
+/>
+
+
+
       </Routes>
-          
+
+
       <Footer />
     </BrowserRouter>
   </AuthProvider>

@@ -35,6 +35,18 @@ const LoanApplicationSchema = new Schema(
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
+    adminRemark: {
+      type: String,
+    },
+
+    reviewedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "Admin",
+    },
+
+    reviewedAt: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

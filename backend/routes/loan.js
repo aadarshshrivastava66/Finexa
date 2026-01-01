@@ -7,6 +7,7 @@ const User = require("../Models/user");
 
 const isLoggedIn = require("../middleware/isLoggedIn");
 
+
 /* Get all loan products */
 router.get("/", async (req, res) => {
   const loans = await Loan.find({ isActive: true });
@@ -110,5 +111,12 @@ router.post("/:loanId/calculate-emi", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+
+
+//Loan Applications Review
+
+
+
 
 module.exports = router;

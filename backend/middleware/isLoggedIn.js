@@ -1,19 +1,19 @@
 const jwt = require("jsonwebtoken");
 
-const isLoggedIn = (req, res, next) => {
+module.exports = (req, res, next) => {
+  console.log("Cookies:", req.cookies); // 👈 ADD THIS
+
   const token = req.cookies.token;
 
   if (!token) {
-    return res.status(401).json({ message: "Not authenticated" });
+    return res.status(401).json({ message: "Not logged in" });
   }
 
   try {
     const decoded = jwt.verify(token, "your_secret_key");
-    req.user = decoded; // { userId, role }
+    req.user = decoded;
     next();
-  } catch (error) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid token" });
   }
 };
-
-module.exports = isLoggedIn;
