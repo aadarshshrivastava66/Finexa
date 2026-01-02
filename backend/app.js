@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser"); // new
-
+const session = require("express-session");
 const app = express();
 
 app.use(express.json());
@@ -13,6 +13,21 @@ app.use(
     credentials: true, // allow cookies
   })
 );
+app.use(
+  session({
+    
+    secret: "verify-session-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax", 
+      secure: false,  
+      maxAge: 10 * 60 * 1000,
+    },
+  })
+);
+
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/finexaDB")
@@ -27,6 +42,14 @@ app.use("/loans", loanRoute);
 
 const adminRoute=require('./routes/admin');
 app.use('/admin',adminRoute)
+
+app.get('/lifeInsurance',(req,res)=>{
+  res.json({message:"Module Under Workings"})
+})
+
+app.get('/investment',(req,res)=>{
+  res.json({message:"Module Under Workings"})
+})
 
 app.listen(8080, () => {
   console.log("Server running on port 8080");

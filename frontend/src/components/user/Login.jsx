@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../css/register.css";
 import { useAuth } from "../../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
+
+  const from = location.state?.from?.pathname || "/";
 
   const [formData, setFormData] = useState({ identifier: "", password: "" });
   const [error, setError] = useState("");
@@ -25,13 +28,12 @@ function Login() {
       const res = await axios.post(
         "http://localhost:8080/user/login",
         formData,
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
 
       login({ userId: res.data.userId, role: res.data.role });
-      navigate("/finexa");
+
+      navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
@@ -66,19 +68,18 @@ function Login() {
               onChange={handleChange}
             />
           </div>
+
           {error && <p className="text-danger">{error}</p>}
+
           <div className="col-12 text-center">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={loading}
-            >
+            <button className="btn btn-primary" disabled={loading}>
               {loading ? "Logging in..." : "Login"}
             </button>
           </div>
+
           <div className="text-center mt-2">
             <Link to="/register" style={{ textDecoration: "none" }}>
-              New to Finexa? → Create Account{" "}
+              New to Finexa? → Create Account
             </Link>
           </div>
         </form>

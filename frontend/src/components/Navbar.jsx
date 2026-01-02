@@ -4,7 +4,7 @@ import "../css/navabar.css";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const { user, logout } = useAuth(); // ✅ get from context
+  const { user, logout } = useAuth(); 
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,8 +30,6 @@ function Navbar() {
               </Link>
             </li>
 
-            
-
             <li className="nav-item mx-3">
               <Link className="nav-link active" to="/product">
                 Product
@@ -49,12 +47,13 @@ function Navbar() {
                 About
               </Link>
             </li>
-            <li className="nav-item mx-3">
-              <Link className="nav-link active" to="/admin/dashboard">
-                Admin Dashboard
-              </Link>
-            </li>
-
+            {(user?.role === "admin" || user?.role === "superadmin") && (
+              <li className="nav-item mx-3">
+                <Link className="nav-link active" to="/admin/dashboard">
+                  Admin Dashboard
+                </Link>
+              </li>
+            )}
             {user ? (
               <>
                 <li className="nav-item">
@@ -73,22 +72,51 @@ function Navbar() {
               </>
             ) : (
               <>
-                <li className="nav-item mx-3">
-                  <Link to="/login" className="nav-link active">
+                <div className="dropdown ">
+                  <button
+                    className="btn btn-outline-white dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
                     Login
-                  </Link>
-                </li>
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/login" className="nav-link active">
+                        User Login
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/admin/login" className="nav-link active">
+                        Admin Login
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-                <li className="nav-item mx-3">
-                  <Link to="/signup" className="nav-link active">
+                <div className="dropdown mx-3">
+                  <button
+                    className="btn btn-outline-white dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                  >
                     Register
-                  </Link>
-                </li>
-                <li className="nav-item mx-3">
-                  <Link to="admin/signup" className="nav-link active">
-                    Admin Register
-                  </Link>
-                </li>
+                  </button>
+
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/signup">
+                        User Register
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/admin/signup">
+                        Admin Register
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </>
             )}
           </ul>

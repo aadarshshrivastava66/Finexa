@@ -1,16 +1,17 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-function PrivateRoute({ children }) {
+const AdminProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
 
   if (loading) return <p>Loading...</p>;
 
-  if (!user) {
+  // Only superadmin can access
+  if (!user || user.role !== "superadmin") {
     return (
       <Navigate
-        to="/login"
+        to="/admin/login"
         state={{ from: location }}
         replace
       />
@@ -18,6 +19,6 @@ function PrivateRoute({ children }) {
   }
 
   return children;
-}
+};
 
-export default PrivateRoute;
+export default AdminProtectedRoute;

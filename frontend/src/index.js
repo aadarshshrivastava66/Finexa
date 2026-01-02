@@ -15,10 +15,15 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./route/PrivateRoute";
 import ApplyLoan from "./components/Lone/ApplyLoan";
 import UserDashboard from "./pages/UserDashboard";
-import AdminRegister from './components/admin/AdminRegister'
-import AdminLogin from './components/admin/AdminLogin'
-import AdminRoute from './route/AdminRoute'
-import AdminDashboard from './pages/AdminDashboard'
+import AdminRegister from "./components/admin/AdminRegister";
+import AdminLogin from "./components/admin/AdminLogin";
+import AdminRoute from "./route/AdminRoute";
+import AdminDashboard from "./pages/AdminDashboard";
+import ApplicationDetails from ".//components/admin/ApplicationDetails";
+import AdminVerify from "./components/admin/AdminVerify"
+import AdminProtectedRoute from './route/AdminProtectedRoute'
+import InsurancaPage from './pages/InsurancePage'
+import InvestementPage from './pages/InvestementPage'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -34,6 +39,8 @@ root.render(
         <Route path="/check-eligibility/:id" element={<CheckEligibility />} />
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/lifeInsurance" element={<InsurancaPage />} />
+        <Route path="/investment" element={<InvestementPage />} />
         <Route
           path="/apply-loan/:loanId"
           element={
@@ -51,22 +58,38 @@ root.render(
           }
         />
         {/* Admin */}
-           <Route path="admin/signup" element={<AdminRegister />} />
+         <Route path="/admin/verify" element={<AdminVerify />} />
+
+        {/* Protected Admin Signup */}
+        <Route
+          path="/admin/signup"
+          element={
+            <AdminProtectedRoute>
+              <AdminRegister />
+            </AdminProtectedRoute>
+          }
+        />
+          
         <Route path="admin/login" element={<AdminLogin />} />
 
-                    <Route
-  path="/admin/dashboard"
-  element={
-    <AdminRoute>
-      <AdminDashboard />
-    </AdminRoute>
-  }
-/>
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
 
-
-
+        <Route
+          path="/admin/applications/:id"
+          element={
+            <AdminRoute>
+              <ApplicationDetails />
+            </AdminRoute>
+          }
+        />
       </Routes>
-
 
       <Footer />
     </BrowserRouter>

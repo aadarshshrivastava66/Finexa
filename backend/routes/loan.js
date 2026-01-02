@@ -81,7 +81,7 @@ const calculateEMI = (principal, annualRate, tenureYears) => {
 };
 
 /* EMI Preview API */
-router.post("/:loanId/calculate-emi", async (req, res) => {
+router.post("/:loanId/calculate-emi",isLoggedIn,async (req, res) => {
   try {
     const { loanId } = req.params;
     const { amount } = req.body;

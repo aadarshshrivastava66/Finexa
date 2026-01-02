@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import  { useState } from "react";
+import { useNavigate,useLocation } from "react-router-dom";
 import axios from "axios";
 import "../../css/register.css";
 import { useAuth } from "../../context/AuthContext";
@@ -7,7 +7,8 @@ import { useAuth } from "../../context/AuthContext";
 function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
-
+ const location = useLocation();
+  const from = location.state?.from?.pathname || "/admin/dashboard";
   const [formData, setFormData] = useState({ identifier: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,8 @@ function Login() {
       );
 
       login({ userId: res.data.userId, role: res.data.role });
-      navigate("/lones");
+      
+    navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {

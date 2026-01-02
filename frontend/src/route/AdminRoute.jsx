@@ -1,14 +1,20 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const AdminRoute = ({ children }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
+  const location = useLocation();
 
-  if (!user) return <Navigate to="/login" />;
+  if (loading) return <p>Loading...</p>;
 
-  // allow admin OR superadmin
-  if (user.role !== "admin" && user.role !== "superadmin") {
-    return <Navigate to="/unauthorized" />;
+  if (!user || !["admin", "superadmin"].includes(user.role)) {
+    return (
+      <Navigate
+        to="/admin/login"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
   return children;

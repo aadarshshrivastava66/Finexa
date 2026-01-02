@@ -8,7 +8,7 @@ function LonePage() {
   const [allLoans,setAllLoans]=useState([]);
 
   useEffect(()=>{
-    axios.get("http://localhost:8080/loans")
+      axios.get("http://localhost:8080/loans")
     .then((res)=>{
       console.log(res.data)
       setAllLoans(res.data);

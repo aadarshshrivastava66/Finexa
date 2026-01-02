@@ -27,7 +27,7 @@ function LifeInSueance() {
         </CardContent>
         <CardActions >
         <Button size="small" color="primary" component={Link}
-  to="/lones">
+  to="/lifeInsurance">
           Get Started &nbsp;<i class="fa-solid fa-arrow-right-long"></i>
         </Button>
       </CardActions>
