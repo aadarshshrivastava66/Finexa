@@ -2,6 +2,7 @@ import react  from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import InvestementCard from '../components/investement/InvestementCard';
 
 function InvestementPage(){
       const navigate=useNavigate();
@@ -16,6 +17,7 @@ function InvestementPage(){
             navigate('/product');
         })
     },[])
+   
 }
 
 export default InvestementPage;

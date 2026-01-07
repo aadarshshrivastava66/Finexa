@@ -2,7 +2,7 @@ import React from "react";
 import "../../css/loneCard.css";
 import { useNavigate } from "react-router-dom";
 
-function LoanCard({ imageurl, title, desc, interest, tenure, amount, id }) {
+function LoanCard({ imageurl, title,interest, tenure, amount, id }) {
   const navigate = useNavigate();
 
   return (
@@ -25,7 +25,7 @@ function LoanCard({ imageurl, title, desc, interest, tenure, amount, id }) {
 
       <div className="loan-actions mt-3">
         <button
-          className="btn btn-outline-primary btn-sm"
+          className="btn btn-outline-primary btn-sm" style={{color:"black"}}
           onClick={() => navigate(`/check-eligibility/${id}`)}
         >
           Check Eligibility
@@ -33,7 +33,7 @@ function LoanCard({ imageurl, title, desc, interest, tenure, amount, id }) {
 
         {/* ✅ FIXED */}
         <button
-          className="btn btn-outline-primary btn-sm ms-2"
+          className="btn btn-outline-primary btn-sm ms-2" style={{color:"black"}}
           onClick={() => navigate(`/apply-loan/${id}`)}
         >
           Apply Now

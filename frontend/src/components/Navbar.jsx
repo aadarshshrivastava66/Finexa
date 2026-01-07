@@ -37,6 +37,12 @@ function Navbar() {
             </li>
 
             <li className="nav-item mx-3">
+              <Link className="nav-link active" to="/lifeInsurance">
+                Insurance
+              </Link>
+            </li>
+
+            <li className="nav-item mx-3">
               <Link className="nav-link active" to="/lones">
                 Lone
               </Link>
