@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser"); // new
 const session = require("express-session");
 const app = express();
+const InsuranceModal=require('./Models/insurance')
 
 app.use(express.json());
 app.use(cookieParser()); // parse cookies
@@ -43,6 +44,9 @@ app.use("/loans", loanRoute);
 const adminRoute=require('./routes/admin');
 app.use('/admin',adminRoute)
 
+const insuranceRoute=require('./routes/insurance');
+app.use('/lifeInsurance',insuranceRoute)
+
 app.get('/lifeInsurance',(req,res)=>{
   res.json({message:"Module Under Workings"})
 })
@@ -50,6 +54,9 @@ app.get('/lifeInsurance',(req,res)=>{
 app.get('/investment',(req,res)=>{
   res.json({message:"Module Under Workings"})
 })
+
+
+
 
 app.listen(8080, () => {
   console.log("Server running on port 8080");

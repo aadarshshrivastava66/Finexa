@@ -1,0 +1,18 @@
+.detail-card{
+    background:#f5f6f8;
+    transition:transform 0.3s ease;
+}
+
+.detail-card:hover{
+ transform:scale(1.02);
+ background:white;
+ box-shadow:2px 2px 10px blue;
+}
+
+.heading{
+    color:rgb(14, 14, 240)
+}
+
+.mainheading{
+    color:rgb(235, 22, 22)
+}

@@ -24,6 +24,9 @@ import AdminVerify from "./components/admin/AdminVerify"
 import AdminProtectedRoute from './route/AdminProtectedRoute'
 import InsurancaPage from './pages/InsurancePage'
 import InvestementPage from './pages/InvestementPage'
+import ChildInsurance from './components/insurance/ChildInsurance'
+import RequiredDocument from './components/insurance/RequiredDocument'
+import ApplyInsurance from './components/insurance/ApplyInsurance'
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -41,11 +44,21 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/lifeInsurance" element={<InsurancaPage />} />
         <Route path="/investment" element={<InvestementPage />} />
+        <Route path="/lifeInsurance/Childinsurance" element={<ChildInsurance />} />
+        <Route path="/lifeInsurance/Childinsurance/:id" element={<RequiredDocument />} />
         <Route
           path="/apply-loan/:loanId"
           element={
             <PrivateRoute>
               <ApplyLoan />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/lifeInsurance/Childinsurance/apply-insurance/:id"
+          element={
+            <PrivateRoute>
+              <ApplyInsurance />
             </PrivateRoute>
           }
         />

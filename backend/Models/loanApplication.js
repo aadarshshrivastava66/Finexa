@@ -11,7 +11,7 @@ const LoanApplicationSchema = new Schema(
 
     loan: {
       type: Schema.Types.ObjectId,
-      ref: "Loan", // ✅ refers to your existing Loan model
+      ref: "Loan", 
       required: true,
     },
 
