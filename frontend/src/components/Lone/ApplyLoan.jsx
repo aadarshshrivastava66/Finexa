@@ -1,133 +1,131 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
 function ApplyLoan() {
   const { loanId } = useParams();
 
+  const requiredDocs = ["Aadhaar", "PAN", "Salary Slip"];
+
   const [formData, setFormData] = useState({
-    loanId: loanId,
+    loanId,
     appliedAmount: "",
     employmentType: "",
     annualIncome: "",
   });
 
+  const [uploadedDocs, setUploadedDocs] = useState({});
   const [emiData, setEmiData] = useState(null);
-  const [loadingEmi, setLoadingEmi] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 🔹 EMI CALCULATION
-  const calculateEmi = async () => {
-    if (!formData.appliedAmount) {
-      alert("Enter loan amount first");
-      return;
-    }
-
-    try {
-      setLoadingEmi(true);
-      const res = await axios.post(
-        `http://localhost:8080/loans/${loanId}/calculate-emi`,
-        { amount: formData.appliedAmount }
-      );
-      setEmiData(res.data);
-    } catch (err) {
-      alert(err.response?.data?.message || "Failed to calculate EMI");
-    } finally {
-      setLoadingEmi(false);
-    }
+  const handleFileChange = (doc, file) => {
+    setUploadedDocs((prev) => ({
+      ...prev,
+      [doc]: file,
+    }));
   };
 
-  // 🔹 APPLY LOAN
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const submitData = new FormData();
+
+    Object.entries(formData).forEach(([k, v]) =>
+      submitData.append(k, v)
+    );
+
+    submitData.append(
+      "documentsMeta",
+      JSON.stringify(requiredDocs)
+    );
+
+    requiredDocs.forEach((doc) => {
+      submitData.append("files", uploadedDocs[doc]);
+    });
+
     try {
+      setLoading(true);
       const res = await axios.post(
         "http://localhost:8080/loans/apply",
-        formData,
-        { withCredentials: true }
+        submitData,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       alert(res.data.message);
     } catch (err) {
-      alert(err.response?.data?.message || "Failed to apply loan");
+      alert("Failed to apply loan");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="container mt-5">
-      <div className="card shadow-lg p-4">
+      <div className="card p-4 shadow">
         <h3 className="text-center mb-4">Apply for Loan</h3>
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Loan Amount (₹)</label>
-            <input
-              type="number"
-              name="appliedAmount"
-              className="form-control"
-              onChange={handleChange}
-              required
-            />
-          </div>
+          <label className="form-label">Loan Amount</label>
+          <input
+            type="number"
+            name="appliedAmount"
+            className="form-control mb-3"
+            onChange={handleChange}
+            required
+          />
+
+          <label className="form-label">Employment Type</label>
+          <select
+            name="employmentType"
+            className="form-select mb-3"
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select</option>
+            <option value="salaried">Salaried</option>
+            <option value="self-employed">Self Employed</option>
+          </select>
+
+          <label className="form-label">Annual Income</label>
+          <input
+            type="number"
+            name="annualIncome"
+            className="form-control mb-3"
+            onChange={handleChange}
+            required
+          />
+
+          <h5 className="mt-4">Required Documents</h5>
+
+          {requiredDocs.map((doc) => (
+            <div key={doc} className="mb-3">
+              <label className="form-label">
+                {doc}{" "}
+                {uploadedDocs[doc] ? "✔" : "*"}
+              </label>
+              <input
+                type="file"
+                className="form-control"
+                onChange={(e) =>
+                  handleFileChange(doc, e.target.files[0])
+                }
+                required
+              />
+            </div>
+          ))}
 
           <button
-            type="button"
-            className="btn btn-outline-secondary mb-3"
-            onClick={calculateEmi}
+            className="btn btn-primary w-100 mt-3"
+            disabled={loading}
           >
-            {loadingEmi ? "Calculating..." : "Calculate EMI"}
+            {loading ? "Submitting..." : "Submit Loan Application"}
           </button>
-
-          {/* EMI RESULT */}
-          {emiData && (
-            <div className="alert alert-info" >
-              <p style={{color:"black"}}><strong>Loan:</strong> {emiData.loanName}</p>
-              <p style={{color:"black"}}><strong>Interest:</strong> {emiData.interestRate}%</p>
-              <p style={{color:"black"}}><strong>Tenure:</strong> {emiData.tenure} years</p>
-              <h5 style={{color:"black"}}>Monthly EMI: ₹{emiData.emi}</h5>
-            </div>
-          )}
-
-          <div className="mb-3">
-            <label className="form-label">Employment Type</label>
-            <select
-              name="employmentType"
-              className="form-select"
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select</option>
-              <option value="salaried">Salaried</option>
-              <option value="self-employed">Self Employed</option>
-            </select>
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Annual Income (₹)</label>
-            <input
-              type="number"
-              name="annualIncome"
-              className="form-control"
-              onChange={handleChange}
-              required
-            />
-          </div>
-            <div className="col-12">
-            <div className="form-check">
-              <input className="form-check-input" type="checkbox" required />
-              <label className="form-check-label">
-                I agree with the Terms & Conditions
-              </label>
-            </div>
-          </div>
-          <div className="text-center">
-            <button className="btn btn-primary px-5">
-              Submit Application
-            </button>
-          </div>
         </form>
       </div>
     </div>

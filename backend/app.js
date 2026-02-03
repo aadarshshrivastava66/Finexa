@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser"); // new
 const session = require("express-session");
 const app = express();
 const InsuranceModal=require('./Models/insurance')
+const dotenv=require('dotenv')
+dotenv.config();
 
 app.use(express.json());
 app.use(cookieParser()); // parse cookies
@@ -31,7 +33,7 @@ app.use(
 
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/finexaDB")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 
@@ -46,6 +48,11 @@ app.use('/admin',adminRoute)
 
 const insuranceRoute=require('./routes/insurance');
 app.use('/lifeInsurance',insuranceRoute)
+
+const fileRoutes = require("./routes/files");
+
+app.use("/files", fileRoutes);
+
 
 app.get('/lifeInsurance',(req,res)=>{
   res.json({message:"Module Under Workings"})

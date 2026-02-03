@@ -42,6 +42,35 @@ const AdminApplicationDetails = () => {
       <p><b>Employment:</b> {application.employmentType}</p>
       <p><b>Annual Income:</b> ₹{application.annualIncome}</p>
       <p><b>Status:</b> {application.status}</p>
+      
+
+<h5 className="mt-4">Uploaded Documents</h5>
+
+{application.documents.length > 0 ? (
+  <ul className="list-group mb-3">
+    {application.documents.map((doc) => (
+      <li
+        key={doc._id}
+        className="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <span>{doc.documentType}</span>
+
+        <a
+          href={`http://localhost:8080/files/${doc.fileId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-sm btn-primary"
+        >
+          View / Download
+        </a>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No documents uploaded</p>
+)}
+
+
 
       {application.status === "pending" && (
         <>

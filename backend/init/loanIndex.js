@@ -1,26 +1,27 @@
-const mongoose=require('mongoose');
-const loan=require('../Models/loan');
-const LoanData=require('./loanData');
 
-const mongoUrl="mongodb://127.0.0.1:27017/finexaDB";
-
-async function main() {
+const mongoose = require("mongoose");
+const Loan = require("../Models/loan");
+const loanData = require("./loanData"); 
+const mongoUrl=process.env.MONGO_URI;
+async function initDB() {
+  try {
     await mongoose.connect(mongoUrl);
-    
+    console.log("MongoDB connected");
+
+    // OPTIONAL: clean old data
+    await Loan.deleteMany({});
+    console.log("Old loans removed");
+
+    // INSERT DATA
+    await Loan.insertMany(loanData.initData);
+    console.log("Loan data inserted successfully");
+
+    await mongoose.connection.close();
+    console.log("🔌 MongoDB connection closed");
+  } catch (err) {
+    console.error(" Error inserting loan data:", err);
+    process.exit(1);
+  }
 }
 
-main().then(()=>{
-    console.log("Connected to MongoDB");
-})
-.catch((e)=>{
-    console.log("Error To Connect");
-    console.log(e);
-})
-
-const initDb=async()=>{
-    await loan.deleteMany({});
-    await loan.insertMany(LoanData);
-    console.log("Loan Data Initialized");
-}
-
-initDb();
+initDB();

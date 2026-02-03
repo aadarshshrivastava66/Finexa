@@ -11,7 +11,7 @@ const LoanApplicationSchema = new Schema(
 
     loan: {
       type: Schema.Types.ObjectId,
-      ref: "Loan", 
+      ref: "Loan",
       required: true,
     },
 
@@ -30,23 +30,23 @@ const LoanApplicationSchema = new Schema(
       required: true,
     },
 
+    // 🔹 NEW: documents info
+    documents: [
+      {
+        documentType: String,
+        fileId: Schema.Types.ObjectId, // GridFS file ID
+      },
+    ],
+
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
       default: "pending",
     },
-    adminRemark: {
-      type: String,
-    },
 
-    reviewedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "Admin",
-    },
-
-    reviewedAt: {
-      type: Date,
-    },
+    adminRemark: String,
+    reviewedBy: { type: Schema.Types.ObjectId, ref: "Admin" },
+    reviewedAt: Date,
   },
   { timestamps: true }
 );

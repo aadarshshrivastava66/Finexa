@@ -34,7 +34,7 @@ const verify=router.get("/check-access", (req, res) => {
 
 
 //signup
-router.post("/signup",verify, async (req, res) => {
+router.post("/signup", async (req, res) => {
   const { firstName, lastName, email, phone, password, role } = req.body;
 
   try {

@@ -19,7 +19,7 @@ import AdminRegister from "./components/admin/AdminRegister";
 import AdminLogin from "./components/admin/AdminLogin";
 import AdminRoute from "./route/AdminRoute";
 import AdminDashboard from "./pages/AdminDashboard";
-import ApplicationDetails from ".//components/admin/ApplicationDetails";
+import ApplicationDetails from "./components/admin/ApplicationDetails";
 import AdminVerify from "./components/admin/AdminVerify"
 import AdminProtectedRoute from './route/AdminProtectedRoute'
 import InsurancaPage from './pages/InsurancePage'

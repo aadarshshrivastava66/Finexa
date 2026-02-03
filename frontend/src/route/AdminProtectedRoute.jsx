@@ -7,8 +7,8 @@ const AdminProtectedRoute = ({ children }) => {
 
   if (loading) return <p>Loading...</p>;
 
-  // Only superadmin can access
-  if (!user || user.role !== "superadmin") {
+ 
+  if ( !user||user.role !== "superadmin") {
     return (
       <Navigate
         to="/admin/login"
