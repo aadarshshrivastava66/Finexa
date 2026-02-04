@@ -5,11 +5,13 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
 const Admin = require("../Models/Admin");
-const LoanApplication = require("../Models/loanApplication");
+
 
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isAdmin = require("../middleware/isAdmin");
-const isSuperAdmin=require('../middleware/isSuperAdmin')
+const isSuperAdmin = require("../middleware/isSuperAdmin");
+const insuranceController = require("../controller/admin_insurance");
+const loanApplicationController=require('../controller/admin_loan')
 
 router.post("/verify", (req, res) => {
   const { code } = req.body;
@@ -23,7 +25,7 @@ router.post("/verify", (req, res) => {
   res.json({ message: "Verified successfully" });
 });
 
-const verify=router.get("/check-access", (req, res) => {
+const verify = router.get("/check-access", (req, res) => {
   if (!req.session.verified) {
     return res.status(401).json({ message: "Verification required" });
   }
@@ -31,7 +33,6 @@ const verify=router.get("/check-access", (req, res) => {
 
   res.json({ access: true });
 });
-
 
 //signup
 router.post("/signup", async (req, res) => {
@@ -87,7 +88,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { userId: admin._id, role: admin.role },
       "your_secret_key",
-      { expiresIn: "1d" }
+      { expiresIn: "1d" },
     );
 
     res.cookie("token", token, {
@@ -108,86 +109,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//Insurance API
+router.get(
+  "/insurance/applications",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.insuranceApplication,
+);
+router.get("/insurance/applications/:id",isLoggedIn,
+  isAdmin, insuranceController.insuranceDetail);
+router.patch(
+  "/insurance/applications/:id/status",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.updateStatus
+);
 
+//Loan API
+router.get("/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
 
-router.get("/applications", isLoggedIn, isAdmin, async (req, res) => {
-  try {
-    const applications = await LoanApplication.find()
-      .populate("user", "name email phone")
-      .populate("loan")
-      .sort({ createdAt: -1 });
+router.get("/applications/:id", isLoggedIn, isAdmin, loanApplicationController.ApplicationDetail);
 
-    res.json(applications);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-//all applications
-router.get("/applications/:id", isLoggedIn, isAdmin, async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(400).json({ message: "Application ID missing" });
-    }
-
-    const application = await LoanApplication.findById(id)
-      .populate("user", "name email phone")
-      .populate("loan");
-
-    console.log(application)
-
-    if (!application) {
-      return res.status(404).json({ message: "Application not found" });
-    }
-
-    res.json(application);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-//application Detail
 router.patch(
   "/applications/:id/status",
   isLoggedIn,
   isAdmin,
-  async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { status, adminRemark } = req.body;
-
-      if (!["approved", "rejected"].includes(status)) {
-        return res.status(400).json({ message: "Invalid status" });
-      }
-
-      const application = await LoanApplication.findById(id);
-
-      if (!application) {
-        return res.status(404).json({ message: "Application not found" });
-      }
-
-      application.status = status;
-      application.adminRemark = adminRemark;
-      application.reviewedBy = req.user._id;
-      application.reviewedAt = new Date();
-
-      await application.save();
-
-      res.json({
-        message: `Application ${status} successfully`,
-        application,
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Server error" });
-    }
-  }
+  loanApplicationController.updateStatus
 );
 
-
 module.exports = router;
-  

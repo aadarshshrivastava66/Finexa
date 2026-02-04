@@ -27,6 +27,7 @@ import InvestementPage from './pages/InvestementPage'
 import ChildInsurance from './components/insurance/ChildInsurance'
 import RequiredDocument from './components/insurance/RequiredDocument'
 import ApplyInsurance from './components/insurance/ApplyInsurance'
+import InsuranceApplicationDetail from './components/admin/InsuranceApplicationDetail';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -99,6 +100,14 @@ root.render(
           element={
             <AdminRoute>
               <ApplicationDetails />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/insurance/applications/:id"
+          element={
+            <AdminRoute>
+              <InsuranceApplicationDetail/>
             </AdminRoute>
           }
         />

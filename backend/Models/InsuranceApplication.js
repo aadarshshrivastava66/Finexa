@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 
 const documentSchema = new mongoose.Schema({
   documentType: String,
-  fileId: mongoose.Schema.Types.ObjectId, // GridFS file ID
+  fileId: mongoose.Schema.Types.ObjectId, 
 });
 
 const insuranceApplicationSchema = new mongoose.Schema(
   {
     insuranceId: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Insurance",
       required: true,
     },
 
