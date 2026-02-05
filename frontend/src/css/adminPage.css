@@ -1,0 +1,30 @@
+.Admin-card{
+    height :250px;
+    width:30%;
+    text-align:center;
+    border-radius:5%;
+    padding:24px;
+    background: #f5f6f8;
+    transition: transform 0.3s ease;
+}
+
+
+
+.Admin-card:hover{
+   
+   transform: scale(1.05);
+   background-color:white;
+   box-shadow:2px 2px 10px blue;
+}
+
+.cardrow{
+    text-align:center;
+    margin-left:150px;
+}
+
+.image{
+    height :100px;
+    width:70%;
+    margin:20px;
+    
+}

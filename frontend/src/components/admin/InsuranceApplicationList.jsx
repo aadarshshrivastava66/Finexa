@@ -17,7 +17,7 @@ function InsuranceApplicationList(){
   };
      
     return(
-        <div>
+        <div className="container m-5">
         <table className="table table-bordered">
        <thead className="table-dark">
         <tr>

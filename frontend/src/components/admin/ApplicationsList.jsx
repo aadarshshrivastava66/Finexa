@@ -17,6 +17,7 @@ const ApplicationsList = () => {
   };
 
   return (
+    <div className="container m-5">
     <table className="table table-bordered">
       <thead className="table-dark">
         <tr>
@@ -47,6 +48,7 @@ const ApplicationsList = () => {
         ))}
       </tbody>
     </table>
+    </div>
   );
 };
 

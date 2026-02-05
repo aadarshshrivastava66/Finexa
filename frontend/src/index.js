@@ -28,6 +28,16 @@ import ChildInsurance from './components/insurance/ChildInsurance'
 import RequiredDocument from './components/insurance/RequiredDocument'
 import ApplyInsurance from './components/insurance/ApplyInsurance'
 import InsuranceApplicationDetail from './components/admin/InsuranceApplicationDetail';
+import AdminLonePanel from "./components/admin/AdminLonePanel";
+import AdminInsurancePanel from "./components/admin/AdminInsurancePanel";
+import NewLoan from "./components/Lone/NewLoan";
+import ApplicationsList from "./components/admin/ApplicationsList";
+import InsuranceApplicationList from "./components/admin/InsuranceApplicationList";
+import NewInsurance from "./components/insurance/NewInsurance";
+import ApproveLoan from "./components/admin/ApproveLoan";
+import RejectLoan from "./components/admin/RejectLoan";
+import ApproveInsurance from "./components/admin/ApproveInsurance";
+import RejectApplication from "./components/admin/RejectApplication";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -108,6 +118,87 @@ root.render(
           element={
             <AdminRoute>
               <InsuranceApplicationDetail/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard/admin/lone"
+          element={
+            <AdminRoute>
+              <AdminLonePanel/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/dashboard/admin/insurance"
+          element={
+            <AdminRoute>
+              <AdminInsurancePanel/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/loan/new"
+          element={
+            <AdminRoute>
+              <NewLoan/>
+            </AdminRoute>
+          }
+        />
+       
+        <Route
+          path="/loan/pending/applications"
+          element={
+            <AdminRoute>
+              <ApplicationsList/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/loan/approve/application"
+          element={
+            <AdminRoute>
+              <ApproveLoan/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/loan/reject/application"
+          element={
+            <AdminRoute>
+              <RejectLoan/>
+            </AdminRoute>
+          }
+        />
+         <Route
+          path="/insurance/new"
+          element={
+            <AdminRoute>
+              <NewInsurance/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/insurance/pending/applications"
+          element={
+            <AdminRoute>
+              <InsuranceApplicationList/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/insurance/approve/applications"
+          element={
+            <AdminRoute>
+              <ApproveInsurance/>
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/insurance/reject/applications"
+          element={
+            <AdminRoute>
+              <RejectApplication/>
             </AdminRoute>
           }
         />
