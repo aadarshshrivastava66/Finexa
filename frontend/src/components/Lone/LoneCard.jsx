@@ -1,9 +1,24 @@
 import React from "react";
 import "../../css/loneCard.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function LoanCard({ imageurl, title,interest, tenure, amount, id }) {
+function LoanCard({ imageurl, title, interest, tenure, amount, id ,role  }) {
   const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    const confirm = window.confirm("Are you sure you want to delete this loan?");
+    if (!confirm) return;
+
+    try {
+      await axios.delete(`http://localhost:8080/admin/loans/${id}`);
+      alert("Loan deleted successfully");
+      window.location.reload(); // refresh list
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting loan");
+    }
+  };
 
   return (
     <div className="loan-card mt-4">
@@ -25,19 +40,31 @@ function LoanCard({ imageurl, title,interest, tenure, amount, id }) {
 
       <div className="loan-actions mt-3">
         <button
-          className="btn btn-outline-primary btn-sm" style={{color:"black"}}
+          className="btn btn-outline-primary btn-sm"
+          style={{ color: "black" }}
           onClick={() => navigate(`/check-eligibility/${id}`)}
         >
           Check Eligibility
         </button>
 
-        {/* ✅ FIXED */}
         <button
-          className="btn btn-outline-primary btn-sm ms-2" style={{color:"black"}}
+          className="btn btn-outline-primary btn-sm ms-2"
+          style={{ color: "black" }}
           onClick={() => navigate(`/apply-loan/${id}`)}
         >
           Apply Now
         </button>
+
+       
+        {(role === "admin" || role === "superadmin") && (
+  <button
+    className="btn btn-outline-danger btn-sm ms-2"
+    onClick={handleDelete}
+  >
+    Delete
+  </button>
+)}
+
       </div>
     </div>
   );

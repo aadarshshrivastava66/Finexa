@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 
 const Admin = require("../Models/Admin");
 
-
+const loan=require('../Models/loan')
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isAdmin = require("../middleware/isAdmin");
 const isSuperAdmin = require("../middleware/isSuperAdmin");
@@ -127,8 +127,11 @@ router.patch(
 
 //Loan API
 router.get("/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
+router.get("/reject/applications", isLoggedIn, isAdmin, loanApplicationController.rejectLoanApplications);
+router.get("/approve/applications", isLoggedIn, isAdmin, loanApplicationController.approveLoanApplications);
 
 router.get("/applications/:id", isLoggedIn, isAdmin, loanApplicationController.ApplicationDetail);
+
 
 router.patch(
   "/applications/:id/status",
@@ -136,5 +139,36 @@ router.patch(
   isAdmin,
   loanApplicationController.updateStatus
 );
+
+
+
+router.post("/loans/new", isLoggedIn, isAdmin,async(req,res)=>{
+   try {
+    const newLoan = new loan(req.body);   
+    await newLoan.save();                 
+
+    console.log(newLoan);
+    res.json({ message: "New loan Saved Successfully" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error saving loan", error });
+  }
+
+})
+
+router.delete("/loans/:id", isLoggedIn, isAdmin,async(req,res)=>{
+  const {id}=req.params;
+  try{
+    const deleteloan=await loan.findByIdAndDelete(id);
+    if(!deleteloan){
+      return res.json({message:"Loan Not Found"})
+    }
+    res.json({message:"Loan Deleted Successfully"})
+  }catch(err){
+    console.log(err);
+    res.json({message:"Some Server Error Come"})
+  }
+})
 
 module.exports = router;

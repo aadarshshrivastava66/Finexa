@@ -1,12 +1,43 @@
 const LoanApplication =require('../Models/loanApplication');
 
+
 module.exports.LoanApplications= async (req, res) => {
   try {
-    const applications = await LoanApplication.find()
+const applications = await LoanApplication.find({ status: "pending" })
+  .populate("user", "name email phone")
+  .populate("loan")
+  .sort({ createdAt: -1 });
+
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+module.exports.rejectLoanApplications= async (req, res) => {
+  console.log("request come")
+  try {
+    const applications = await LoanApplication.find({status: "rejected"})
       .populate("user", "name ")
       .populate("loan")
       .sort({ createdAt: -1 });
+console.log(applications)
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+}
 
+module.exports.approveLoanApplications= async (req, res) => {
+  console.log("request come")
+  try {
+    const applications = await LoanApplication.find({status: "approved"})
+      .populate("user", "name ")
+      .populate("loan")
+      .sort({ createdAt: -1 });
+    console.log(applications)
     res.json(applications);
   } catch (err) {
     console.error(err);

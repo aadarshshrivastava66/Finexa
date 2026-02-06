@@ -14,7 +14,7 @@ function AdminLoanPanel() {
       <h2 className="text-center mb-4">Admin Loan Panel</h2>
       <div className="row">
 
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Add New Loan</h1>
           <br />
           <button 
@@ -25,7 +25,7 @@ function AdminLoanPanel() {
           </button>
         </div>
 
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Pending Applications</h1>
           <br />
           <button 
@@ -36,7 +36,7 @@ function AdminLoanPanel() {
           </button>
         </div>
 
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Approved Applications</h1>
           <br />
           <button 
@@ -46,8 +46,8 @@ function AdminLoanPanel() {
             View
           </button>
         </div>
-        <div className="m-5 loan-card col">
-          <h1 className="fs-3">Reject Applications</h1>
+        <div className="m-5 loanpanel-card col">
+          <h1 className="fs-3">Rejected Applications</h1>
           <br />
           <button 
             className="btn btn-primary"

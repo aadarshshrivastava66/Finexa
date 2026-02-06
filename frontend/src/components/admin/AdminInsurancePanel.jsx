@@ -13,7 +13,7 @@ function AdminInsurancePanel(){
       <h2 className="text-center mb-4">Admin Insurance Panel</h2>
       <div className="row">
 
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Add New Insurance</h1>
           <br />
           <button 
@@ -24,7 +24,7 @@ function AdminInsurancePanel(){
           </button>
         </div>
 
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Pending Applications</h1>
           <br />
           <button 
@@ -34,7 +34,7 @@ function AdminInsurancePanel(){
             View
           </button>
         </div>
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Approved Applications</h1>
           <br />
           <button 
@@ -44,7 +44,7 @@ function AdminInsurancePanel(){
             View
           </button>
         </div>
-        <div className="m-5 loan-card col">
+        <div className="m-5 loanpanel-card col">
           <h1 className="fs-3">Reject Applications</h1>
           <br />
           <button 

@@ -2,9 +2,10 @@ import React from "react";
 import LoneCard from "../components/Lone/LoneCard";
 import {useState,useEffect} from "react";
 import axios from "axios";
-
+import { useAuth } from "../context/AuthContext";
 function LonePage() {
-
+   const { user } = useAuth();
+   const role = user?.role || "user";
   const [allLoans,setAllLoans]=useState([]);
 
   useEffect(()=>{
@@ -33,6 +34,7 @@ function LonePage() {
       tenure={loan.tenure}
       amount={loan.maxAmount}
       id={loan._id}
+      role={role}
     />
   </div>
 ))}
