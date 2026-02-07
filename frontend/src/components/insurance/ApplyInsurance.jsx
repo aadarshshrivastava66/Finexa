@@ -23,7 +23,7 @@ const ApplyInsurance = () => {
   // Fetch insurance details
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/lifeInsurance/Childinsurance/${id}`)
+      .get(`http://localhost:8080/lifeInsurance/${id}`)
       .then((res) => {
         setRequiredDocs(res.data.documentsRequired || []);
       })
@@ -56,9 +56,9 @@ const ApplyInsurance = () => {
         fd.append("files", uploadedDocs[doc]);
       });
 
-      // 🔥 THIS IS THE MOST IMPORTANT LINE
+     
       await axios.post(
-        `http://localhost:8080/lifeInsurance/Childinsurance/apply-insurance/${id}`,
+        `http://localhost:8080/lifeInsurance/apply-insurance/${id}`,
         fd
       );
 

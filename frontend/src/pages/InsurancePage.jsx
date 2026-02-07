@@ -42,6 +42,7 @@ function InsurancePage() {
             desc={
               "Builds a reliable income for a secure and comfortable retired life."
             }
+            url={"RetirementInsurance"}
           />
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12">
@@ -51,6 +52,7 @@ function InsurancePage() {
             desc={
               "Ensures long-term financial stability for you and your family."
             }
+            url={"SecurityInsurance"}
           />
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12">
@@ -60,6 +62,7 @@ function InsurancePage() {
             desc={
               "Provides financial support to your family during unexpected situations."
             }
+            url={"FamilyInsurance"}
           />
         </div>
         <div className="col-lg-4 col-md-6 col-sm-12">
@@ -69,6 +72,7 @@ function InsurancePage() {
             desc={
               "Helps grow your savings and build long-term financial assets."
             }
+            url={"WealthInsurance"}
           />
         </div>
       </div>

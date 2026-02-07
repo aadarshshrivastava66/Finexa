@@ -128,7 +128,7 @@ router.patch(
 //Loan API
 router.get("/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
 router.get("/reject/applications", isLoggedIn, isAdmin, loanApplicationController.rejectLoanApplications);
-router.get("/approve/applications", isLoggedIn, isAdmin, loanApplicationController.approveLoanApplications);
+router.get("/approve/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
 
 router.get("/applications/:id", isLoggedIn, isAdmin, loanApplicationController.ApplicationDetail);
 

@@ -10,7 +10,7 @@ function RequiredDocument() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/lifeInsurance/Childinsurance/${id}`)
+      .get(`http://localhost:8080/lifeInsurance/${id}`)
       .then((res) => {
         console.log(res.data);
         setDocuments(res.data.documentsRequired); 
@@ -36,7 +36,7 @@ function RequiredDocument() {
       <button
               className="btn btn-outline-primary btn-sm ms-2"
               style={{ color: "black" }}
-              onClick={() => navigate(`/lifeInsurance/Childinsurance/apply-insurance/${id}`)}
+              onClick={() => navigate(`/lifeInsurance/apply-insurance/${id}`)}
             >
               Apply Now
             </button>

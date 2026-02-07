@@ -17,8 +17,44 @@ router.get("/Childinsurance", async (req, res) => {
   }
 });
 
-/* GET REQUIRED DOCUMENTS ONLY */
-router.get("/Childinsurance/:id", async (req, res) => {
+router.get("/RetirementInsurance", async (req, res) => {
+  try {
+    const allData = await InsuranceModel.find({ type: "Retiremen-Plan" });
+    res.json(allData);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/SecurityInsurance", async (req, res) => {
+  try {
+    const allData = await InsuranceModel.find({ type: "Saving" });
+    res.json(allData);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/FamilyInsurance", async (req, res) => {
+  try {
+    const allData = await InsuranceModel.find({ type: "family-Protection" });
+    res.json(allData);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/WealthInsurance", async (req, res) => {
+  try {
+    const allData = await InsuranceModel.find({ type: "Weath-Creation" });
+    res.json(allData);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+router.get("/:id", async (req, res) => {
   try {
     const insurance = await InsuranceModel.findById(req.params.id).select("documentsRequired");
     if (!insurance) return res.status(404).json({ message: "Insurance not found" });
@@ -30,14 +66,14 @@ router.get("/Childinsurance/:id", async (req, res) => {
 
 /* APPLY INSURANCE (WITH DOCUMENTS) */
 router.post(
-  "/Childinsurance/apply-insurance/:id",
+  "/apply-insurance/:id",
   upload.array("files", 10),
   uploadMultipleToGridFS,
   async (req, res) => {
     try {
       const insuranceId = req.params.id;
 
-      // 🔒 SAFETY CHECK
+      
       if (!mongoose.Types.ObjectId.isValid(insuranceId)) {
         return res.status(400).json({ message: "Invalid insurance ID" });
       }

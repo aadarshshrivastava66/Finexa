@@ -3,14 +3,14 @@ import axios from "axios";
 import "../../css/insurancetype.css";
 import { useNavigate } from "react-router-dom";
 
-function ChildInsurance() {
+function FamilyInsurance() {
   const navigate = useNavigate();
   const [allInsurance, setAllInsurance] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/lifeInsurance/Childinsurance")
+      .get("http://localhost:8080/lifeInsurance/FamilyInsurance")
       .then((res) => {
         setAllInsurance(res.data);
       })
@@ -24,7 +24,7 @@ function ChildInsurance() {
 
   return (
     <div className="container mt-3">
-      <h1 className="text-center mt-3">Child Education</h1>
+      <h1 className="text-center mt-3">Family Plan</h1>
       {allInsurance.map((item) => (
         <div
           key={item._id}
@@ -76,4 +76,4 @@ function ChildInsurance() {
   );
 }
 
-export default ChildInsurance;
+export default FamilyInsurance;

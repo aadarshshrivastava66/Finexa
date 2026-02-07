@@ -38,6 +38,10 @@ import ApproveLoan from "./components/admin/ApproveLoan";
 import RejectLoan from "./components/admin/RejectLoan";
 import ApproveInsurance from "./components/admin/ApproveInsurance";
 import RejectApplication from "./components/admin/RejectApplication";
+import RetirementInsurance from "./components/insurance/RetirementInsurance";
+import SecurityInsurance from "./components/insurance/SecurityInsurance";
+import FamilyInsurance from "./components/insurance/FamilyInsurance";
+import WealthInsurance from "./components/insurance/WealthInsurance";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -56,7 +60,11 @@ root.render(
         <Route path="/lifeInsurance" element={<InsurancaPage />} />
         <Route path="/investment" element={<InvestementPage />} />
         <Route path="/lifeInsurance/Childinsurance" element={<ChildInsurance />} />
-        <Route path="/lifeInsurance/Childinsurance/:id" element={<RequiredDocument />} />
+        <Route path="lifeInsurance/RetirementInsurance" element={<RetirementInsurance/>} />
+        <Route path="lifeInsurance/SecurityInsurance" element={<SecurityInsurance/>} />
+        <Route path="lifeInsurance/FamilyInsurance" element={<FamilyInsurance/>} />
+        <Route path="lifeInsurance/WealthInsurance" element={<WealthInsurance/>} />
+        <Route path="/lifeInsurance/:id" element={<RequiredDocument />} />
         <Route
           path="/apply-loan/:loanId"
           element={
@@ -66,7 +74,7 @@ root.render(
           }
         />
         <Route
-          path="/lifeInsurance/Childinsurance/apply-insurance/:id"
+          path="/lifeInsurance/apply-insurance/:id"
           element={
             <PrivateRoute>
               <ApplyInsurance />
