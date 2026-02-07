@@ -143,6 +143,7 @@ router.patch(
 
 
 router.post("/loans/new", isLoggedIn, isAdmin,async(req,res)=>{
+ 
    try {
     const newLoan = new loan(req.body);   
     await newLoan.save();                 

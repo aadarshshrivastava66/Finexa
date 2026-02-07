@@ -2,6 +2,7 @@ import React from "react";
 import "../../css/loneCard.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import adminApi from "../../services/adminApi"
 
 function LoanCard({ imageurl, title, interest, tenure, amount, id ,role  }) {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ function LoanCard({ imageurl, title, interest, tenure, amount, id ,role  }) {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://localhost:8080/admin/loans/${id}`);
+      await axios.delete(`http://localhost:8080/admin/loans/${id}`,{withCredentials: true});
       alert("Loan deleted successfully");
       window.location.reload(); // refresh list
     } catch (error) {

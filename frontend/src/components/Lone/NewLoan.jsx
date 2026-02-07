@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import adminApi from "../../services/adminApi"
 
 function NewLoan() {
   const [loading, setLoading] = useState(false);
@@ -63,12 +64,11 @@ function NewLoan() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);   // disable button
-
+    setLoading(true);   
     try {
-      const res = await axios.post(
-        "http://localhost:8080/admin/loans/new",
-        form
+      const res = await adminApi.post(
+        "/loans/new",
+        form,
       );
 
       alert("Loan Created Successfully!");
@@ -77,7 +77,7 @@ function NewLoan() {
       console.error(error);
       alert("Error creating loan");
     } finally {
-      setLoading(false); // enable button again
+      setLoading(false); 
     }
   };
 
