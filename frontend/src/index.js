@@ -23,7 +23,7 @@ import ApplicationDetails from "./components/admin/ApplicationDetails";
 import AdminVerify from "./components/admin/AdminVerify"
 import AdminProtectedRoute from './route/AdminProtectedRoute'
 import InsurancaPage from './pages/InsurancePage'
-import InvestementPage from './pages/InvestementPage'
+
 import ChildInsurance from './components/insurance/ChildInsurance'
 import RequiredDocument from './components/insurance/RequiredDocument'
 import ApplyInsurance from './components/insurance/ApplyInsurance'
@@ -58,7 +58,7 @@ root.render(
         <Route path="/signup" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/lifeInsurance" element={<InsurancaPage />} />
-        <Route path="/investment" element={<InvestementPage />} />
+        
         <Route path="/lifeInsurance/Childinsurance" element={<ChildInsurance />} />
         <Route path="lifeInsurance/RetirementInsurance" element={<RetirementInsurance/>} />
         <Route path="lifeInsurance/SecurityInsurance" element={<SecurityInsurance/>} />

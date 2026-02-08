@@ -3,7 +3,6 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
-
 const Admin = require("../Models/Admin");
 const insurance=require("../Models/insurance")
 const loan=require('../Models/loan')
@@ -140,7 +139,7 @@ router.patch(
 //Loan API
 router.get("/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
 router.get("/reject/applications", isLoggedIn, isAdmin, loanApplicationController.rejectLoanApplications);
-router.get("/approve/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
+router.get("/approve/applications", isLoggedIn, isAdmin, loanApplicationController.approveLoanApplications);
 
 router.get("/applications/:id", isLoggedIn, isAdmin, loanApplicationController.ApplicationDetail);
 

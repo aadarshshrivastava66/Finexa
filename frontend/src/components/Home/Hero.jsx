@@ -17,7 +17,7 @@ function Hero() {
             Finexa provides comprehensive financial solutions<br></br> to help
             you secure your future.
           </p>
-          <p >Instant Loans, Credit Cards, and Investment Plans.</p>
+          <p >Get Instant Loans and secure your future with Insurance Plans.</p>
           { user ?( <Link to='/product'>
           <button className="btn btn-warning mt-3">
             Explore Products <i className="fa-solid fa-arrow-right ms-2"></i>

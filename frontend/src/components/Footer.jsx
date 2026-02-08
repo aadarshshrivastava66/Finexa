@@ -8,17 +8,16 @@ function Footer() {
             <div className='row '>
                 <div className='col'>
                     <h3>Finexa</h3>
-                    <p className='para'>Your Trusted Partner for Loans,<br></br>Insurance and Investements</p>
+                    <p className='para'>Your Trusted Partner for <br></br> Loans and Insurance</p>
                 </div>
                 <div className='col'>
                     <h3>Products</h3>
                     <Link to ="/products" style={{textDecoration:"none", color:"white"}}>Loans</Link><br></br>
                     <Link to ="/products" style={{textDecoration:"none", color:"white"}}>Insurance</Link><br></br>
-                    <Link to ="/products" style={{textDecoration:"none", color:"white"}}>Investements</Link><br></br>
                 </div>
                 <div className='col'>
                     <h3>Company</h3>
-                    <Link to ="/about" style={{textDecoration:"none", color:"white"}}>About Us</Link><br></br>
+                   
                     <Link to ="/contact" style={{textDecoration:"none", color:"white"}}>Contact Us</Link><br></br>
                     <Link to ="#" style={{textDecoration:"none", color:"white"}}>Privacy Policy</Link><br></br>
                 </div>

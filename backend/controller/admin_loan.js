@@ -16,7 +16,7 @@ const applications = await LoanApplication.find({ status: "pending" })
 }
 
 module.exports.rejectLoanApplications= async (req, res) => {
-  console.log("request come")
+  
   try {
     const applications = await LoanApplication.find({status: "rejected"})
       .populate("user", "name ")

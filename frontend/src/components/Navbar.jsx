@@ -4,7 +4,7 @@ import "../css/navabar.css";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const { user, logout } = useAuth(); 
+  const { user, logout } = useAuth();
 
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -48,11 +48,6 @@ function Navbar() {
               </Link>
             </li>
 
-            <li className="nav-item mx-3">
-              <Link className="nav-link active" to="/about">
-                About
-              </Link>
-            </li>
             {(user?.role === "admin" || user?.role === "superadmin") && (
               <li className="nav-item mx-3">
                 <Link className="nav-link active" to="/admin/dashboard">
@@ -62,11 +57,14 @@ function Navbar() {
             )}
             {user ? (
               <>
-                <li className="nav-item">
-                  <Link className="nav-link active" to="/dashboard">
-                    Dashboard
-                  </Link>
-                </li>
+                {user?.role === "user" && (
+                  <li className="nav-item">
+                    <Link className="nav-link active" to="/dashboard">
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
+
                 <li className="nav-item mx-3">
                   <button
                     onClick={logout}
@@ -114,11 +112,6 @@ function Navbar() {
                     <li>
                       <Link className="dropdown-item" to="/signup">
                         User Register
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/admin/signup">
-                        Admin Register
                       </Link>
                     </li>
                   </ul>

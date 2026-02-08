@@ -1,6 +1,6 @@
 .Admin-card{
     height :250px;
-    width:30%;
+    width:25%;
     text-align:center;
     border-radius:5%;
     padding:24px;
@@ -17,10 +17,7 @@
    box-shadow:2px 2px 10px blue;
 }
 
-.cardrow{
-    text-align:center;
-    margin-left:150px;
-}
+
 
 .image{
     height :100px;
