@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import adminApi from "../../services/adminApi";
-import axios from "axios"
+
 import { useNavigate } from "react-router-dom";
 function InsuranceApplicationList(){
     const [applications,setApplications]=useState([]);
@@ -11,7 +11,7 @@ function InsuranceApplicationList(){
   }, []);
 
   const fetchApplications = async () => {
-    const res = await adminApi.get("/insurance/applications");
+    const res = await adminApi.get("/insurance/pending/applications");
 
     setApplications(res.data);
   };

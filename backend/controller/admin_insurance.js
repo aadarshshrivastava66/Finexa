@@ -1,10 +1,37 @@
 const express=require('express');
 const insuranceApplication=require("../Models/InsuranceApplication");
 
-module.exports.insuranceApplication=async(req,res)=>{
+module.exports.pendinginsuranceApplication = async (req, res) => {
+  try {
+    console.log("request come");
+
+    const applications = await insuranceApplication.find().populate("insuranceId", "title type");
+
+    console.log(applications);
+    res.json(applications);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Some Error to fetch Information" });
+  }
+};
+
+module.exports.approveinsuranceApplication=async(req,res)=>{
   try{
-    const applications=await insuranceApplication.find().populate("insuranceId", "title type");
+    const applications=await insuranceApplication.find({status: "approved"}).populate("insuranceId", "title type");
     // console.log(applications);
+    res.json(applications);
+  }catch(err){
+    console.log(err);
+    res.json({message:"Some Error to fetch Information"});
+  }
+    
+}
+module.exports.rejectinsuranceApplication=async(req,res)=>{
+  console.log("request come")
+  try{
+    const applications=await insuranceApplication.find({status: "rejected"}).populate("insuranceId", "title type");
+    console.log(applications);
     res.json(applications);
   }catch(err){
     console.log(err);

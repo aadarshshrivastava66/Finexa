@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
 const Admin = require("../Models/Admin");
-
+const insurance=require("../Models/insurance")
 const loan=require('../Models/loan')
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isAdmin = require("../middleware/isAdmin");
@@ -111,10 +111,22 @@ router.post("/login", async (req, res) => {
 
 //Insurance API
 router.get(
-  "/insurance/applications",
+  "/insurance/pending/applications",
   isLoggedIn,
   isAdmin,
-  insuranceController.insuranceApplication,
+  insuranceController.pendinginsuranceApplication,
+);
+router.get(
+  "/insurance/approve/applications",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.approveinsuranceApplication,
+);
+router.get(
+  "/insurance/reject/applications",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.rejectinsuranceApplication,
 );
 router.get("/insurance/applications/:id",isLoggedIn,
   isAdmin, insuranceController.insuranceDetail);
@@ -158,6 +170,22 @@ router.post("/loans/new", isLoggedIn, isAdmin,async(req,res)=>{
 
 })
 
+router.post("/insurance/new", isLoggedIn, isAdmin,async(req,res)=>{
+ 
+   try {
+    const newInsurance = new insurance(req.body);   
+    await newInsurance.save();                 
+
+    console.log(newInsurance);
+    res.json({ message: "New Insurance Saved Successfully" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error saving loan", error });
+  }
+
+})
+
 router.delete("/loans/:id", isLoggedIn, isAdmin,async(req,res)=>{
   const {id}=req.params;
   try{
@@ -171,5 +199,26 @@ router.delete("/loans/:id", isLoggedIn, isAdmin,async(req,res)=>{
     res.json({message:"Some Server Error Come"})
   }
 })
+
+router.delete("/insurance/:id", isLoggedIn, isAdmin, async (req, res) => {
+  const id = req.params.id;
+
+  console.log("Received ID:", id);   
+
+  try {
+    const deleteinsurance = await insurance.findByIdAndDelete(id);
+
+    if (!deleteinsurance) {
+      return res.status(404).json({ message: "Insurance Not Found" });
+    }
+
+    res.json({ message: "Insurance Deleted Successfully" });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 
 module.exports = router;
