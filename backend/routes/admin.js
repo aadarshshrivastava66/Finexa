@@ -2,15 +2,12 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 const Admin = require("../Models/Admin");
-const insurance=require("../Models/insurance")
-const loan=require('../Models/loan')
 const isLoggedIn = require("../middleware/isLoggedIn");
 const isAdmin = require("../middleware/isAdmin");
 const isSuperAdmin = require("../middleware/isSuperAdmin");
 const insuranceController = require("../controller/admin_insurance");
-const loanApplicationController=require('../controller/admin_loan')
+const loanApplicationController = require("../controller/admin_loan");
 
 router.post("/verify", (req, res) => {
   const { code } = req.body;
@@ -34,7 +31,7 @@ const verify = router.get("/check-access", (req, res) => {
 });
 
 //signup
-router.post("/signup", async (req, res) => {
+router.post("/signup", isLoggedIn, isSuperAdmin, async (req, res) => {
   const { firstName, lastName, email, phone, password, role } = req.body;
 
   try {
@@ -127,97 +124,79 @@ router.get(
   isAdmin,
   insuranceController.rejectinsuranceApplication,
 );
-router.get("/insurance/applications/:id",isLoggedIn,
-  isAdmin, insuranceController.insuranceDetail);
+router.get(
+  "/insurance/applications/:id",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.insuranceDetail,
+);
 router.patch(
   "/insurance/applications/:id/status",
   isLoggedIn,
   isAdmin,
-  insuranceController.updateStatus
+  insuranceController.updateStatus,
+);
+
+router.post(
+  "/insurance/new",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.NewInsurance,
+);
+
+router.delete(
+  "/insurance/:id",
+  isLoggedIn,
+  isAdmin,
+  insuranceController.deleteInsurance,
 );
 
 //Loan API
-router.get("/applications", isLoggedIn, isAdmin, loanApplicationController.LoanApplications);
-router.get("/reject/applications", isLoggedIn, isAdmin, loanApplicationController.rejectLoanApplications);
-router.get("/approve/applications", isLoggedIn, isAdmin, loanApplicationController.approveLoanApplications);
+router.get(
+  "/applications",
+  isLoggedIn,
+  isAdmin,
+  loanApplicationController.LoanApplications,
+);
+router.get(
+  "/reject/applications",
+  isLoggedIn,
+  isAdmin,
+  loanApplicationController.rejectLoanApplications,
+);
+router.get(
+  "/approve/applications",
+  isLoggedIn,
+  isAdmin,
+  loanApplicationController.approveLoanApplications,
+);
 
-router.get("/applications/:id", isLoggedIn, isAdmin, loanApplicationController.ApplicationDetail);
-
+router.get(
+  "/applications/:id",
+  isLoggedIn,
+  isAdmin,
+  loanApplicationController.ApplicationDetail,
+);
 
 router.patch(
   "/applications/:id/status",
   isLoggedIn,
   isAdmin,
-  loanApplicationController.updateStatus
+  loanApplicationController.updateStatus,
 );
 
+router.post(
+  "/loans/new",
+  isLoggedIn,
+  isAdmin,
+  loanApplicationController.NewLoan,
+);
 
-
-router.post("/loans/new", isLoggedIn, isAdmin,async(req,res)=>{
- 
-   try {
-    const newLoan = new loan(req.body);   
-    await newLoan.save();                 
-
-    console.log(newLoan);
-    res.json({ message: "New loan Saved Successfully" });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error saving loan", error });
-  }
-
-})
-
-router.post("/insurance/new", isLoggedIn, isAdmin,async(req,res)=>{
- 
-   try {
-    const newInsurance = new insurance(req.body);   
-    await newInsurance.save();                 
-
-    console.log(newInsurance);
-    res.json({ message: "New Insurance Saved Successfully" });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error saving loan", error });
-  }
-
-})
-
-router.delete("/loans/:id", isLoggedIn, isAdmin,async(req,res)=>{
-  const {id}=req.params;
-  try{
-    const deleteloan=await loan.findByIdAndDelete(id);
-    if(!deleteloan){
-      return res.json({message:"Loan Not Found"})
-    }
-    res.json({message:"Loan Deleted Successfully"})
-  }catch(err){
-    console.log(err);
-    res.json({message:"Some Server Error Come"})
-  }
-})
-
-router.delete("/insurance/:id", isLoggedIn, isAdmin, async (req, res) => {
-  const id = req.params.id;
-
-  console.log("Received ID:", id);   
-
-  try {
-    const deleteinsurance = await insurance.findByIdAndDelete(id);
-
-    if (!deleteinsurance) {
-      return res.status(404).json({ message: "Insurance Not Found" });
-    }
-
-    res.json({ message: "Insurance Deleted Successfully" });
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ message: "Server Error" });
-  }
-});
-
+router.delete(
+  "/loans/:id",
+  isLoggedIn,
+  isAdmin,
+  loanApplicationController.DeleteLoan,
+);
 
 module.exports = router;

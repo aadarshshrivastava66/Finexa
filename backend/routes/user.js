@@ -41,8 +41,7 @@ router.post("/login", async (req, res) => {
     if (!user) return res.status(400).json({ message: "User not found" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch)
-      return res.status(400).json({ message: "Invalid Password" });
+    if (!isMatch) return res.status(400).json({ message: "Invalid Password" });
 
     // Generate JWT
     const token = jwt.sign(
@@ -50,7 +49,7 @@ router.post("/login", async (req, res) => {
       "your_secret_key",
       {
         expiresIn: "1d",
-      }
+      },
     );
 
     // Send HTTP-only cookie
@@ -71,7 +70,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Logout
-router.post("/logout",isLoggedIn, (req, res) => {
+router.post("/logout", isLoggedIn, (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logged out successfully" });
 });
@@ -85,8 +84,5 @@ router.get("/me", isLoggedIn, (req, res) => {
     },
   });
 });
-
-
-
 
 module.exports = router;

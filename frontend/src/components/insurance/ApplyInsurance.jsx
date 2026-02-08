@@ -56,10 +56,9 @@ const ApplyInsurance = () => {
         fd.append("files", uploadedDocs[doc]);
       });
 
-     
       await axios.post(
         `http://localhost:8080/lifeInsurance/apply-insurance/${id}`,
-        fd
+        fd,
       );
 
       alert("Insurance application submitted successfully");
@@ -87,14 +86,18 @@ const ApplyInsurance = () => {
         />
       ))}
 
-      <h5 className="mt-3">Documents</h5>
+      <h5 className="mt-3">Documents Required</h5>
+
       {requiredDocs.map((doc) => (
-        <input
-          key={doc}
-          type="file"
-          className="form-control my-2"
-          onChange={(e) => handleFileChange(doc, e.target.files[0])}
-        />
+        <div key={doc} className="my-3">
+          <label className="form-label fw-bold">Upload: {doc}</label>
+
+          <input
+            type="file"
+            className="form-control"
+            onChange={(e) => handleFileChange(doc, e.target.files[0])}
+          />
+        </div>
       ))}
 
       <button
