@@ -49,10 +49,6 @@ app.use("/lifeInsurance", insuranceRoute);
 const fileRoutes = require("./routes/files");
 app.use("/files", fileRoutes);
 
-app.get("/lifeInsurance", (req, res) => {
-  res.json({ message: "Module Under Workings" });
-});
-
 app.get("/investment", (req, res) => {
   res.json({ message: "Module Under Workings" });
 });

@@ -56,7 +56,7 @@ function NewInsurance() {
 
           <option value="Child-Education">Select Insurance Type</option>
           <option value="Child-Education">Child-Education</option>
-          <option value="hRetiremen-Plan">Retiremen-Plan</option>
+          <option value="Retiremen-Plan">Retiremen-Plan</option>
           <option value="Saving">Saving</option>
           <option value="family-Protection">family-Protection</option>
           <option value="Weath-Creation">Weath-Creation</option>

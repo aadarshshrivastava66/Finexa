@@ -1,12 +1,13 @@
 const express = require("express");
 const insuranceApplication = require("../Models/InsuranceApplication");
+const insurance=require('../Models/insurance')
 
 module.exports.pendinginsuranceApplication = async (req, res) => {
   try {
     console.log("request come");
 
     const applications = await insuranceApplication
-      .find()
+      .find({ status: "pending" })
       .populate("insuranceId", "title type");
 
     console.log(applications);

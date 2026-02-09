@@ -1,4 +1,5 @@
 const LoanApplication = require("../Models/loanApplication");
+const loan=require('../Models/loan')
 
 module.exports.LoanApplications = async (req, res) => {
   try {

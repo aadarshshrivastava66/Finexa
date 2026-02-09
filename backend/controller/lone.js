@@ -66,10 +66,12 @@ module.exports.ApplyLoan = async (req, res) => {
 };
 
 module.exports.LoanApplication = async (req, res) => {
+    console.log("request come on loan")
   try {
     const applications = await LoanApplication.find({
       user: req.user.userId,
     }).populate("loan");
+   
     res.json(applications);
   } catch (err) {
     res.status(500).json({ message: "Server error" });

@@ -20,6 +20,7 @@ function Footer() {
                    
                     <Link to ="/contact" style={{textDecoration:"none", color:"white"}}>Contact Us</Link><br></br>
                     <Link to ="#" style={{textDecoration:"none", color:"white"}}>Privacy Policy</Link><br></br>
+                    <p style={{textDecoration:"none", color:"white"}}>Develop By : Aadarsh Shrivastava</p>
                 </div>
                 <div className='col'>
                     <h3>Contact</h3>

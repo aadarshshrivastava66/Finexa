@@ -2,6 +2,7 @@ const InsuranceModel = require("../Models/insurance");
 const InsuranceApplication = require("../Models/InsuranceApplication");
 const mongoose = require("mongoose");
 
+
 module.exports.AllChildInsurance = async (req, res) => {
   try {
     const allData = await InsuranceModel.find({ type: "Child-Education" });
@@ -107,3 +108,6 @@ module.exports.ApplyInsurance = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+

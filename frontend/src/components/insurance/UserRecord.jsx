@@ -1,20 +1,18 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import UserRecord from "../components/insurance/UserRecord";
 
-function UserDashboard() {
-  const [loans, setLoans] = useState([]);
+function UserRecord() {
+  const [insurance, setInsurance] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchLoans = async () => {
+    const fetchInsurance = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/loans/my",
+          "http://localhost:8080/lifeInsurance/my",
           { withCredentials: true }
         );
-        setLoans(res.data);
+        setInsurance(res.data || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -22,7 +20,7 @@ function UserDashboard() {
       }
     };
 
-    fetchLoans();
+    fetchInsurance();
   }, []);
 
   if (loading) {
@@ -31,29 +29,30 @@ function UserDashboard() {
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">My Loan Applications</h2>
+      <h2 className="mb-4">My Insurance Applications</h2>
 
-      {loans.length === 0 ? (
-        <p>You have not applied for any loans yet.</p>
+      {insurance.length === 0 ? (
+        <p>You have not applied for any insurance yet.</p>
       ) : (
         <table className="table table-bordered table-hover">
           <thead className="table-dark">
             <tr>
               <th>#</th>
-              <th>Loan Name</th>
-              <th>Applied Amount</th>
-              <th>Employment Type</th>
+              <th>Policy Name</th>
+              <th>Applicant</th>
+              <th>Mobile</th>
               <th>Status</th>
               <th>Applied On</th>
             </tr>
           </thead>
+
           <tbody>
-            {loans.map((item, index) => (
+            {insurance.map((item, index) => (
               <tr key={item._id}>
                 <td>{index + 1}</td>
-                <td>{item.loan?.name}</td>
-                <td>₹{item.appliedAmount}</td>
-                <td>{item.employmentType}</td>
+                <td>{item.insuranceId?.type || "Life Insurance"}</td>
+                <td>{item.fullName}</td>
+                <td>{item.mobile}</td>
                 <td>
                   <span
                     className={`badge ${
@@ -75,10 +74,8 @@ function UserDashboard() {
           </tbody>
         </table>
       )}
-      <UserRecord/>
     </div>
-
   );
 }
 
-export default UserDashboard;
+export default UserRecord;
