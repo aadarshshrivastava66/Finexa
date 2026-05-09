@@ -33,7 +33,7 @@ function Login() {
 
       login({ userId: res.data.userId, role: res.data.role });
       
-    navigate(from, { replace: true });
+    navigate("/admin/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");
     } finally {

@@ -78,7 +78,7 @@ function Login() {
           </div>
 
           <div className="text-center mt-2">
-            <Link to="/register" style={{ textDecoration: "none" }}>
+            <Link to="/signup" style={{ textDecoration: "none" }}>
               New to Finexa? → Create Account
             </Link>
           </div>
