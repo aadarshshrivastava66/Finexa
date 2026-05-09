@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://afinexa.netlify.app/",
+    origin: "https://afinexa.netlify.app",
     credentials: true,
   }),
 );
