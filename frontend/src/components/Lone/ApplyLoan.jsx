@@ -50,7 +50,7 @@ function ApplyLoan() {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:8080/loans/apply",
+        "https://finexa-backend-7d2r.onrender.com/loans/apply",
         submitData,
         {
           withCredentials: true,

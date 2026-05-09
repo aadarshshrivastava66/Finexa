@@ -24,7 +24,7 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:8080/admin/login",
+        "https://finexa-backend-7d2r.onrender.com/admin/login",
         formData,
         {
           withCredentials: true,

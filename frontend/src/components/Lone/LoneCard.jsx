@@ -12,7 +12,7 @@ function LoanCard({ imageurl, title, interest, tenure, amount, id ,role  }) {
     if (!confirm) return;
 
     try {
-      await axios.delete(`http://localhost:8080/admin/loans/${id}`,{withCredentials: true});
+      await axios.delete(`https://finexa-backend-7d2r.onrender.com/admin/loans/${id}`,{withCredentials: true});
       alert("Loan deleted successfully");
       window.location.reload(); // refresh list
     } catch (error) {

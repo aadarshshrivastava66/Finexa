@@ -11,7 +11,7 @@ function CheckEligibility() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/loans/${id}/checkEligibility`)
+      .get(`https://finexa-backend-7d2r.onrender.com/loans/${id}/checkEligibility`)
       .then((res) => {
         console.log(res.data);
         setLoan(res.data);
@@ -25,7 +25,7 @@ function CheckEligibility() {
 
     try {
       const res = await axios.post(
-        `http://localhost:8080/loans/${id}/calculate-emi`,
+        `https://finexa-backend-7d2r.onrender.com/loans/${id}/calculate-emi`,
         { amount }
       );
       setEmiResult(res.data);
