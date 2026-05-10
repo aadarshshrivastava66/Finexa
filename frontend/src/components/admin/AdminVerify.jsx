@@ -17,7 +17,7 @@ function AdminVerify(){
         e.preventDefault();
         setLoading(true);
         try{
-            await axios.post("http://localhost:8080/admin/verify",formdata,{withCredentials: true})
+            await axios.post("https://finexa-backend-7d2r.onrender.com/admin/verify",formdata,{withCredentials: true})
           
 
             nevigate('/admin/signup');

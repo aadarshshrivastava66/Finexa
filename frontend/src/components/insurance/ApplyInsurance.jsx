@@ -23,7 +23,7 @@ const ApplyInsurance = () => {
   // Fetch insurance details
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/lifeInsurance/${id}`)
+      .get(`https://finexa-backend-7d2r.onrender.com/lifeInsurance/${id}`)
       .then((res) => {
         setRequiredDocs(res.data.documentsRequired || []);
       })
@@ -57,7 +57,7 @@ const ApplyInsurance = () => {
       });
 
       await axios.post(
-        `http://localhost:8080/lifeInsurance/apply-insurance/${id}`,
+        `https://finexa-backend-7d2r.onrender.com/lifeInsurance/apply-insurance/${id}`,
         fd,
       );
 

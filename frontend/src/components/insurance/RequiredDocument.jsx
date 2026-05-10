@@ -10,7 +10,7 @@ function RequiredDocument() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/lifeInsurance/${id}`)
+      .get(`https://finexa-backend-7d2r.onrender.com/lifeInsurance/${id}`)
       .then((res) => {
         console.log(res.data);
         setDocuments(res.data.documentsRequired); 

@@ -13,7 +13,7 @@ function FamilyInsurance() {
   const role = user?.role || "user";
   useEffect(() => {
     axios
-      .get("http://localhost:8080/lifeInsurance/FamilyInsurance")
+      .get("https://finexa-backend-7d2r.onrender.com/lifeInsurance/FamilyInsurance")
       .then((res) => {
         setAllInsurance(res.data);
       })

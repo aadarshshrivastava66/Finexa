@@ -27,7 +27,7 @@ function Register() {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/user/singup", formData, {
+      await axios.post("https://finexa-backend-7d2r.onrender.com/user/singup", formData, {
         withCredentials: true,
       });
       alert("Welcome to Finexa, Please Login");

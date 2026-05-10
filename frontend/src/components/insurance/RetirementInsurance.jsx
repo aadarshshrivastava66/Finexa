@@ -14,7 +14,7 @@ function RetirementInsurance() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/lifeInsurance/RetirementInsurance")
+      .get("https://finexa-backend-7d2r.onrender.com/lifeInsurance/RetirementInsurance")
       .then((res) => {
         setAllInsurance(res.data);
       })

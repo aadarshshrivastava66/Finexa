@@ -64,7 +64,7 @@ function InsuranceApplicationDetail() {
               <span>{doc.documentType}</span>
 
               <a
-                href={`http://localhost:8080/files/${doc.fileId}`}
+                href={`https://finexa-backend-7d2r.onrender.com/files/${doc.fileId}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-sm btn-primary"

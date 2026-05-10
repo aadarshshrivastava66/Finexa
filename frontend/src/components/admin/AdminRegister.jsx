@@ -26,7 +26,7 @@ function AdminRegister() {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:8080/admin/signup", formData, {
+      await axios.post("https://finexa-backend-7d2r.onrender.com/admin/signup", formData, {
         withCredentials: true,
       });
       alert("Registration successful! Please login.");

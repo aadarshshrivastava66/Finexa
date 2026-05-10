@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   // Check if user is logged in
   useEffect(() => {
     axios
-      .get("http://localhost:8080/user/me", { withCredentials: true })
+      .get("https://finexa-backend-7d2r.onrender.com/user/me", { withCredentials: true })
       .then((res) => setUser(res.data.user))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     await axios.post(
-      "http://localhost:8080/user/logout",
+      "https://finexa-backend-7d2r.onrender.com/user/logout",
       {},
       { withCredentials: true }
     );

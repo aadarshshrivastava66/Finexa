@@ -9,7 +9,7 @@ function UserRecord() {
     const fetchInsurance = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/lifeInsurance/my",
+          "https://finexa-backend-7d2r.onrender.com/lifeInsurance/my",
           { withCredentials: true }
         );
         setInsurance(res.data || []);
