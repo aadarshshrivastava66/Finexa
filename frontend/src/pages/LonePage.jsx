@@ -9,7 +9,7 @@ function LonePage() {
   const [allLoans,setAllLoans]=useState([]);
 
   useEffect(()=>{
-      axios.get("http://localhost:8080/loans")
+      axios.get("https://finexa-backend-7d2r.onrender.com/loans")
     .then((res)=>{
       console.log(res.data)
       setAllLoans(res.data);

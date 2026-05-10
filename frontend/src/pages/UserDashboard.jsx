@@ -11,7 +11,7 @@ function UserDashboard() {
     const fetchLoans = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8080/loans/my",
+          "https://finexa-backend-7d2r.onrender.com/loans/my",
           { withCredentials: true }
         );
         setLoans(res.data);

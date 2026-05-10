@@ -4,18 +4,6 @@ import { useNavigate } from "react-router-dom";
 import InsuranceListCard from "../components/insurance/InsuranceListCard";
 
 function InsurancePage() {
-  //     const navigate=useNavigate();
-  // useEffect(()=>{
-  //     axios.get("http://localhost:8080/lifeInsurance")
-  //     .then(()=>{
-  //         alert("Module Under Working");
-  //         navigate('/product');
-  //     }).catch((err)=>{
-  //         console.log(err);
-  //         alert("Some Error Occur ");
-  //         navigate('/product');
-  //     })
-  // },[])
   return (
     <div className="container mt-5">
       <h1 className="text-center" style={{ color: "navy" }}>
