@@ -29,18 +29,35 @@ const LoanApplicationSchema = new Schema(
       type: Number,
       required: true,
     },
+    
+    salary:{
+      type: Number,
+      required:true,
+    },
 
-    // 🔹 NEW: documents info
+    creditScore:{
+      type:Number,
+      required:true,
+    },
+    dependents:{
+      type:Number,
+      required:true
+    },
+    age:{
+      type:Number,
+      required:true
+    },
+
     documents: [
       {
         documentType: String,
-        fileId: Schema.Types.ObjectId, // GridFS file ID
+        fileId: Schema.Types.ObjectId,
       },
     ],
 
     status: {
       type: String,
-      enum: ["pending", "approved", "rejected"],
+      enum: ["pending", "approved", "rejected","processing"],
       default: "pending",
     },
 

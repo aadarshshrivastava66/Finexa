@@ -1,6 +1,7 @@
 const Loan = require("../Models/loan");
 const LoanApplication = require("../Models/loanApplication");
 const User = require("../Models/user");
+const axios = require("axios");
 
 module.exports.AllLoan = async (req, res) => {
   try {
@@ -28,15 +29,22 @@ module.exports.ApplyLoan = async (req, res) => {
       appliedAmount,
       employmentType,
       annualIncome,
+      salary,
+      age,
+      dependents,
+      creditScore,
       documentsMeta,
     } = req.body;
 
-    if (!loanId)
-      return res.status(400).json({ message: "Loan ID is required" });
+    if (!loanId) {
+      return res.status(400).json({
+        message: "Loan ID is required",
+      });
+    }
 
     const docNames = JSON.parse(documentsMeta || "[]");
 
-    const documents = req.files.map((file, index) => ({
+    const documents = (req.files || []).map((file, index) => ({
       documentType: docNames[index],
       fileId: file.id,
     }));
@@ -47,21 +55,65 @@ module.exports.ApplyLoan = async (req, res) => {
       appliedAmount,
       employmentType,
       annualIncome,
+      salary,
+      age,
+      dependents,
+      creditScore,
       documents,
+      status: "processing",
     });
 
     await application.save();
-
     await User.findByIdAndUpdate(req.user.userId, {
-      $push: { appliedLoans: application._id },
+      $push: {
+        appliedLoans: application._id,
+      },
     });
 
     res.status(201).json({
       message: "Loan application submitted successfully",
       application,
     });
+
+    try {
+      const predictionResponse = await axios.post(
+        "http://127.0.0.1:8000/predict",
+        {
+          salary: Number(salary),
+          age: Number(age),
+          dependents: Number(dependents),
+          creditScore: Number(creditScore),
+          appliedAmount: Number(appliedAmount),
+          employmentType: employmentType,
+        }
+      );
+
+      const { eligible, probability } = predictionResponse.data;
+      await LoanApplication.findByIdAndUpdate(
+        application._id,
+        {
+          status: eligible ? "pending" : "rejected",
+          mlProbability: probability,
+        }
+      );
+
+      console.log(
+        `ML prediction completed for application ${application._id}`
+      );
+
+    } catch (mlError) {
+      console.error(
+        "ML prediction failed:",
+        mlError.message
+      );
+    }
+
   } catch (err) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Loan application error:", err);
+
+    return res.status(500).json({
+      message: "Server error",
+    });
   }
 };
 
