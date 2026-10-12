@@ -14,7 +14,7 @@
     box-shadow 0.3s ease;
 }
 
-/* Hover Effect for Desktop */
+/* Hover Effect on Desktop */
 @media (hover: hover) and (pointer: fine) {
   .detail-card:hover {
     transform: translateY(-4px);
@@ -23,19 +23,31 @@
   }
 }
 
-/* Card Heading */
+/* Keep Card Columns Horizontal */
+.detail-card .row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+/* Prevent Columns from Wrapping */
+.detail-card .row > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Card Headings */
 .heading {
   color: #1d4ed8;
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  font-size: clamp(1rem, 2vw, 1.5rem);
   font-weight: 700;
   line-height: 1.4;
-  overflow-wrap: anywhere;
 }
 
 /* Main Heading */
 .mainheading {
   color: #ef4444;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
   font-weight: 800;
   line-height: 1.25;
   overflow-wrap: anywhere;
@@ -44,28 +56,59 @@
 /* Tablet */
 @media (max-width: 991.98px) {
   .detail-card {
-    padding: 18px;
+    padding: 16px;
     border-radius: 10px;
+  }
+
+  .detail-card .row > div {
+    padding-left: 8px;
+    padding-right: 8px;
   }
 }
 
 /* Mobile */
 @media (max-width: 575.98px) {
   .detail-card {
-    padding: 14px;
+    padding: 10px;
     border-radius: 10px;
   }
 
-  .heading {
-    font-size: 1.1rem;
+  .detail-card .row {
+    flex-wrap: nowrap;
+    margin-left: -4px;
+    margin-right: -4px;
   }
 
-  .mainheading {
-    font-size: 1.6rem;
+  .detail-card .row > div {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .detail-card .heading {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .detail-card .mainheading {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .detail-card p,
+  .detail-card li {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .detail-card button {
+    max-width: 100%;
+    font-size: 12px;
+    padding: 8px 10px;
+    white-space: normal;
   }
 }
 
-/* Accessibility: Reduce animation if preferred */
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .detail-card {
     transition: none;
