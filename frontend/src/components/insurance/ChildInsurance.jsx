@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../../css/insurancetype.css";
@@ -14,7 +15,9 @@ function ChildInsurance() {
 
   useEffect(() => {
     axios
-      .get("https://finexa-backend-7d2r.onrender.com/lifeInsurance/Childinsurance")
+      .get(
+        "https://finexa-backend-7d2r.onrender.com/lifeInsurance/Childinsurance"
+      )
       .then((res) => {
         setAllInsurance(res.data);
       })
@@ -25,14 +28,16 @@ function ChildInsurance() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this insurance?"))
+    if (!window.confirm("Are you sure you want to delete this insurance?")) {
       return;
+    }
 
     try {
       await adminApi.delete(`/insurance/${id}`);
 
-      // Remove from UI after delete
-      setAllInsurance(allInsurance.filter((item) => item._id !== id));
+      setAllInsurance((prev) =>
+        prev.filter((item) => item._id !== id)
+      );
 
       alert("Deleted successfully");
     } catch (err) {
@@ -41,67 +46,102 @@ function ChildInsurance() {
     }
   };
 
-  if (error) return <p>{error}</p>;
+  if (error) {
+    return <p className="text-center mt-4">{error}</p>;
+  }
 
   return (
-    <div className="container mt-3">
+    <div className="container-fluid insurance-container mt-3">
       <h1 className="text-center mt-3">Child Education</h1>
 
       {allInsurance.map((item) => (
-        <div
-          key={item._id}
-          className="row border mb-3 rounded detail-card p-3 mt-5"
-        >
-          <div className="col-5 p-3">
-            <h1 className="fs-3 mainheading">Finexa - {item.title}</h1>
-            <p className="fs-6 mb-0">{item.description}</p>
-          </div>
+        <div key={item._id} className="detail-card mt-4 mb-4">
+          <div className="row insurance-row g-0">
 
-          <div className="col-3 p-3">
-            <h2 className="fs-5 mainheading">Key Features</h2>
-            <p className="fs-6 mb-0 heading">Annual Premium Range</p>
-            <p className="fs-6 mb-0">{item.preminumRange} onwards</p>
-            <br />
-            <p className="fs-6 mb-0 heading">Entry Age</p>
-            <p className="fs-6 mb-0">{item.entryAge} Years</p>
-          </div>
-
-          <div className="col-4 p-3">
-            <h2 className="fs-5 mainheading">Key Benefits</h2>
-            {item.keyBenefits.map((benefit, index) => (
-              <p key={index} className="fs-6 mb-0">
-                • {benefit}
+            {/* Product Details */}
+            <div className="col-5 insurance-column">
+              <h2 className="mainheading">
+                Finexa - {item.title}
+              </h2>
+              <p className="insurance-text">
+                {item.description}
               </p>
-            ))}
-            <br />
+            </div>
 
-            <button
-              className="btn btn-outline-primary btn-sm ms-2"
-              onClick={() => navigate(`/lifeInsurance/${item._id}`)}
-            >
-              View Documents
-            </button>
+            {/* Key Features */}
+            <div className="col-3 insurance-column">
+              <h3 className="mainheading section-heading">
+                Key Features
+              </h3>
 
-            <button
-              className="btn btn-outline-primary btn-sm ms-2"
-              onClick={() =>
-                navigate(`/lifeInsurance/apply-insurance/${item._id}`)
-              }
-            >
-              Apply Now
-            </button>
+              <p className="heading insurance-label">
+                Annual Premium Range
+              </p>
+              <p className="insurance-text">
+                {item.preminumRange} onwards
+              </p>
 
-            {(role === "admin" || role === "superadmin") && (
-              <button
-                className="btn btn-outline-danger btn-sm ms-2"
-                onClick={() => handleDelete(item._id)} 
-              >
-                Delete
-              </button>
-            )}
+              <p className="heading insurance-label mt-3">
+                Entry Age
+              </p>
+              <p className="insurance-text">
+                {item.entryAge} Years
+              </p>
+            </div>
+
+            {/* Key Benefits and Actions */}
+            <div className="col-4 insurance-column">
+              <h3 className="mainheading section-heading">
+                Key Benefits
+              </h3>
+
+              {item.keyBenefits?.map((benefit, index) => (
+                <p key={index} className="insurance-text benefit-text">
+                  • {benefit}
+                </p>
+              ))}
+
+              <div className="insurance-actions">
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() =>
+                    navigate(`/lifeInsurance/${item._id}`)
+                  }
+                >
+                  View Documents
+                </button>
+
+                <button
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() =>
+                    navigate(
+                      `/lifeInsurance/apply-insurance/${item._id}`
+                    )
+                  }
+                >
+                  Apply Now
+                </button>
+
+                {(role === "admin" || role === "superadmin") && (
+                  <button
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </button>
+                )}
+              </div>
+            </div>
+
           </div>
         </div>
       ))}
+
+      {!error && allInsurance.length === 0 && (
+        <p className="text-center mt-4">
+          No child insurance plans available.
+        </p>
+      )}
     </div>
   );
 }
